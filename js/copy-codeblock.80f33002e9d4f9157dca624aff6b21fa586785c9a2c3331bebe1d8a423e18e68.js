@@ -1,0 +1,1 @@
+(()=>{var c=e=>{let o=e.currentTarget.getAttribute("data-code");console.log(o);let t=e.currentTarget.children[1];navigator.clipboard.writeText(o),t.innerHTML="Copied!",setTimeout(()=>{t.innerHTML="Copy"},3e3)},l=document.getElementsByClassName("code-block__copy");for(let e of l)e.addEventListener("click",c);})();

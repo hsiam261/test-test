@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Building-Things-From-Scratch on Siam&#39;s Log Book</title>
+    <link>http://localhost:8080/test-test/tags/building-things-from-scratch/</link>
+    <description>Recent content in Building-Things-From-Scratch on Siam&#39;s Log Book</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 23 Dec 2024 21:15:13 +0600</lastBuildDate>
+    <atom:link href="http://localhost:8080/test-test/tags/building-things-from-scratch/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Creating Threads From Scratch</title>
+      <link>http://localhost:8080/test-test/article/creating-threads-from-scratch/</link>
+      <pubDate>Mon, 23 Dec 2024 21:15:13 +0600</pubDate>
+      <guid>http://localhost:8080/test-test/article/creating-threads-from-scratch/</guid>
+      <description>Threads are an abstraction provided to applications that allow that the application to concurrently execute code while sharing the same address space. Threads can be implemented either completely in the user level or using the help of the Kernel. Userland threads are great due to being lightweight but since the kernel is not aware of their existence, they are treated like a second class citizen when compared to full blown processes.</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Siam&#39;s Log Book</title>
+    <link>http://localhost:8080/test-test/tags/</link>
+    <description>Recent content in Tags on Siam&#39;s Log Book</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 18 Jan 2025 20:01:37 +0600</lastBuildDate>
+    <atom:link href="http://localhost:8080/test-test/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Complexity101</title>
+      <link>http://localhost:8080/test-test/tags/complexity101/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:8080/test-test/tags/complexity101/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cs</title>
+      <link>http://localhost:8080/test-test/tags/cs/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:8080/test-test/tags/cs/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cs-Theory</title>
+      <link>http://localhost:8080/test-test/tags/cs-theory/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:8080/test-test/tags/cs-theory/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Np</title>
+      <link>http://localhost:8080/test-test/tags/np/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:8080/test-test/tags/np/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Building-Things-From-Scratch</title>
+      <link>http://localhost:8080/test-test/tags/building-things-from-scratch/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:8080/test-test/tags/building-things-from-scratch/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Linux</title>
+      <link>http://localhost:8080/test-test/tags/linux/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:8080/test-test/tags/linux/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Systems-Programming</title>
+      <link>http://localhost:8080/test-test/tags/systems-programming/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:8080/test-test/tags/systems-programming/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Threads</title>
+      <link>http://localhost:8080/test-test/tags/threads/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:8080/test-test/tags/threads/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

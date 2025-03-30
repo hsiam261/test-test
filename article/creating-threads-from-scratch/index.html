@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/test-test/livereload.js?mindelay=10&amp;v=2&amp;port=8080&amp;path=test-test/livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="favicon.ico" type="/favicon.ico"/>
+<title>Creating Threads From Scratch | Siam&#39;s Log Book</title>
+
+
+
+
+
+<script>
+  console.log('\/assets\/base.css')
+  console.log('assets\/base.css')
+
+</script>
+
+
+
+
+  <link rel="stylesheet" href="/test-test/assets/base.min.9b5239c64e0139111a460418ee7c1c1d69084c30912bd290a89cd3ec766b46f1.css" integrity="sha256-m1I5xk4BOREaRgQY7nwcHWkITDCRK9KQqJzT7HZrRvE=" crossorigin="anonymous">
+
+
+      <script src="/test-test/js/darkmode.929d1cf85e347ca0f0ab6aeabd1dcb9a09f60cae1f4a217792689166248dbd82.js" integrity="sha256-kp0c&#43;F40fKDwq2rqvR3Lmgn2DK4fSiF3kmiRZiSNvYI=" crossorigin="anonymous" defer></script>
+      <script src="/test-test/js/copy-codeblock.80f33002e9d4f9157dca624aff6b21fa586785c9a2c3331bebe1d8a423e18e68.js" integrity="sha256-gPMwAunU&#43;RV9ymJK/2sh&#43;lhnhcmiwzMb6&#43;HYpCPhjmg=" crossorigin="anonymous" defer></script>
+      <script src="/test-test/js/collapse-codeblock.0919b8b0724ee0b37d5bac71141a7efe13f0f4cd85d7915e87f60e17c6254d9c.js" integrity="sha256-CRm4sHJO4LN9W6xxFBp&#43;/hPw9M2F15Feh/YOF8YlTZw=" crossorigin="anonymous" defer></script>
+
+
+</head>
+<body>
+  <div class="root" id="root">
+    <header>
+      <nav class="nav">
+    <div class="nav__logo">
+        <svg viewBox="0 0 76 76" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" enable-background="new 0 0 76.00 76.00" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path stroke-width="0.2" stroke-linejoin="round" d="M 35.625,29.6875C 36.4995,29.6875 37.2083,30.3964 37.2083,31.2708C 37.2083,32.1453 36.4994,32.8542 35.625,32.8542C 34.7505,32.8542 34.0417,32.1453 34.0417,31.2708C 34.0417,30.3964 34.7505,29.6875 35.625,29.6875 Z M 40.7708,29.6875C 41.6453,29.6875 42.3542,30.3964 42.3542,31.2708C 42.3542,32.1453 41.6453,32.8542 40.7708,32.8542C 39.8964,32.8542 39.1875,32.1453 39.1875,31.2708C 39.1875,30.3964 39.8964,29.6875 40.7708,29.6875 Z M 25.6695,50.3757C 24.9442,48.0415 24.5417,45.4621 24.5417,42.75L 24.5568,41.8418C 22.3238,43.0668 19.8176,44.3333 19,44.3333C 16.8873,44.3333 20.8257,39.4499 25.9794,34.1962C 26.4655,32.8374 27.0638,31.5722 27.7572,30.4249C 28.2641,24.0121 32.6565,19 38,19C 43.3435,19 47.7358,24.0121 48.2428,30.4249C 48.9362,31.5722 49.5345,32.8374 50.0206,34.1962C 55.1743,39.4499 59.1127,44.3333 57,44.3333C 56.1824,44.3333 53.6762,43.0669 51.4432,41.8418L 51.4583,42.75C 51.4583,45.4621 51.0558,48.0415 50.3305,50.3757L 48.2917,49.875C 48.2917,43.7841 45.5317,38.5857 41.649,36.5467L 38,42.75L 34.3514,36.5475C 30.4685,38.59 27.7084,43.8045 27.7085,49.9664L 25.6695,50.3757 Z M 34.0416,26.125C 31.8555,26.125 30.0833,28.2517 30.0833,30.875C 30.0833,33.4984 31.8555,35.625 34.0416,35.625C 36.2278,35.625 38,33.4984 38,30.875C 38,28.2517 36.2278,26.125 34.0416,26.125 Z M 38,30.875C 38,32.6239 39.7722,34.4375 41.9583,34.4375C 44.1444,34.4375 45.9166,32.6239 45.9166,30.875C 45.9166,29.1261 44.1444,27.3125 41.9583,27.3125C 39.7722,27.3125 38,29.1261 38,30.875 Z M 30.0833,50.6667C 33.1473,50.6667 35.7032,52.0266 36.29,53.8333L 36.8125,53.8333L 36.8125,55.4167L 36.29,55.4167C 35.7032,57.2234 33.1473,58.5833 30.0833,58.5833C 26.5855,58.5833 23.75,56.8111 23.75,54.625C 23.75,52.4389 26.5855,50.6667 30.0833,50.6667 Z M 45.9166,50.6667C 49.4144,50.6667 52.25,52.4389 52.25,54.625C 52.25,56.8111 49.4144,58.5833 45.9166,58.5833C 42.8526,58.5833 40.2968,57.2234 39.71,55.4167L 39.1875,55.4167L 39.1875,53.8333L 39.71,53.8333C 40.2968,52.0266 42.8526,50.6667 45.9166,50.6667 Z "></path> </g></svg>
+        <p>Siam&#39;s Log Book</p></a>
+    </div>
+    <div class="nav__links">
+        
+
+        
+        
+            <button><a href="/" >HOME</a></button>
+        
+            <button><a href="/categories/all/" >ALL</a></button>
+        
+            <button><a href="/article/" >ARTICLES</a></button>
+        
+            <button><a href="/note/" >NOTES</a></button>
+        
+            <button><a href="/library/" >LIBRARY</a></button>
+        
+            <button><a href="/about" >ABOUT</a></button>
+        
+        
+    </div>
+    <div class="nav__icon-tray">
+        <button class="nav__icon" id="darkmode-toggle">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z"/></svg>
+        </button>
+    </div>
+</nav>
+
+
+    </header>
+    <div class="container">
+      <div class="aside">
+    <div class="card">
+    <figure>
+        
+        <img src="/profile-pictures/profile.png">
+        
+        
+        <figcaption>Siam Habib</figcaption>
+        
+    </figure>
+    
+    <p> Software Engineer, Optimizely Inc. </p>
+    
+    <div class="icon-tray">
+        
+        <a href="https://github.com/hsiam261/"><button class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" class="icon__svg"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3 .3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5 .3-6.2 2.3zm44.2-1.7c-2.9 .7-4.9 2.6-4.6 4.9 .3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3 .7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3 .3 2.9 2.3 3.9 1.6 1 3.6 .7 4.3-.7 .7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3 .7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3 .7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></button></a>
+        
+
+        
+        <button class="icon"><a href="https://bd.linkedin.com/in/siam-habib-a0a506b4"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon__svg"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg></a></button>
+        
+    </div>
+</div>
+
+    
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+
+<div class="tag-box">
+    <h4>Tags</h4>
+    <div class="tags-tray">
+        
+            <div class="tag">
+                <div class="tag__name"><a href="/tags/building-things-from-scratch">building-things-from-scratch</a></div><div class="tag__count">1</div>
+            </div>
+        
+            <div class="tag">
+                <div class="tag__name"><a href="/tags/complexity101">complexity101</a></div><div class="tag__count">1</div>
+            </div>
+        
+            <div class="tag">
+                <div class="tag__name"><a href="/tags/cs">cs</a></div><div class="tag__count">1</div>
+            </div>
+        
+            <div class="tag">
+                <div class="tag__name"><a href="/tags/cs-theory">cs-theory</a></div><div class="tag__count">1</div>
+            </div>
+        
+            <div class="tag">
+                <div class="tag__name"><a href="/tags/linux">linux</a></div><div class="tag__count">1</div>
+            </div>
+        
+            <div class="tag">
+                <div class="tag__name"><a href="/tags/np">np</a></div><div class="tag__count">1</div>
+            </div>
+        
+            <div class="tag">
+                <div class="tag__name"><a href="/tags/systems-programming">systems-programming</a></div><div class="tag__count">1</div>
+            </div>
+        
+            <div class="tag">
+                <div class="tag__name"><a href="/tags/threads">threads</a></div><div class="tag__count">1</div>
+            </div>
+        
+        <div class="tag">
+            <div class="see-all-tag"><a href="/tags/">See All >> </a></div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+      <main class="main">
+        
+  
+
+
+
+<div class="post autonumber">
+    
+    <div class="post__title">
+        <h1> Creating Threads From Scratch </h1>
+    </div>
+    
+
+    
+    <div class="post__metadata">
+    <div class="post__metadata--entry">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="post__metadata--calender-icon"><path d="M128 0c17.7 0 32 14.3 32 32l0 32 128 0 0-32c0-17.7 14.3-32 32-32s32 14.3 32 32l0 32 48 0c26.5 0 48 21.5 48 48l0 48L0 160l0-48C0 85.5 21.5 64 48 64l48 0 0-32c0-17.7 14.3-32 32-32zM0 192l448 0 0 272c0 26.5-21.5 48-48 48L48 512c-26.5 0-48-21.5-48-48L0 192zm64 80l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16zm128 0l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0zM64 400l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0zm112 16l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16z"/></svg> Dec 23, 2024
+    </div>
+    <div class="post__metadata--entry">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="post__metadata--folder-icon"><path d="M88.7 223.8L0 375.8 0 96C0 60.7 28.7 32 64 32l117.5 0c17 0 33.3 6.7 45.3 18.7l26.5 26.5c12 12 28.3 18.7 45.3 18.7L416 96c35.3 0 64 28.7 64 64l0 32-336 0c-22.8 0-43.8 12.1-55.3 31.8zm27.6 16.1C122.1 230 132.6 224 144 224l400 0c11.5 0 22 6.1 27.7 16.1s5.7 22.2-.1 32.1l-112 192C453.9 474 443.4 480 432 480L32 480c-11.5 0-22-6.1-27.7-16.1s-5.7-22.2 .1-32.1l112-192z"/></svg> Atricle
+    </div>
+</div>
+
+    
+    <div class="post__content">
+        <p>Threads are an abstraction provided to applications that allow that the application to concurrently execute code while sharing the same address space. Threads can be implemented either completely in the user level or using the help of the Kernel. Userland threads are great due to being lightweight but since the kernel is not aware of their existence, they are treated like a second class citizen when compared to full blown processes. Since the kernel is not responsible for scheduling them they can&rsquo;t be preempted by hardware or two threads from the same process can not be scheduled to run at the same time. This article will focus solely on how to implement kernel level threads. More precisely we will want create a posix thread like threading library for Linux in C that meet the following two requirements:</p>
+<ol>
+<li>preemptible by the kernel</li>
+<li>scheduling fully managed by the kernel and</li>
+<li>multiple threads from the same process are allowed to execute parallely if multiple processors are present.</li>
+</ol>
+<h2 id="posix-threads">Posix Threads</h2>
+<p><a href="https://en.wikipedia.org/wiki/POSIX">Posix</a> is a family of IEEE standards that tries to define what an Unix operating system should behave like. POSIX.1 defines a set of APIs for concurrent programming in Unix environments. GNU/Linux &rsquo;s implementation of Posix threads is known as <a href="https://en.wikipedia.org/wiki/Native_POSIX_Thread_Library">NPTL (Native Posix Thread Library)</a> and has been a part of Linux since version 2.6 is fully integrated with the <a href="https://www.gnu.org/software/libc/">glibc</a> library since <a href="https://lists.gnu.org/archive/html/info-gnu/2004-08/msg00002.html">version 2.3.3</a>.</p>
+<p>The whole pthreads API is really big. But the two main functions are:</p>
+<ul>
+<li><a href="https://pubs.opengroup.org/onlinepubs/000095399/functions/pthread_create.html"><code>pthread_create</code></a>: Takes a function and it&rsquo;s arguments as input and runs it in a separate thread. The function passed to <code>pthread_create</code> is expected to take a <code>void*</code> as an argument and return a <code>void*</code> as its return value. <code>pthread_create</code> returns an integer <code>thread_id</code> that is used to join on thread.</li>
+<li><a href="https://man7.org/linux/man-pages/man3/pthread_join.3.html"><code>pthread_join</code></a>: Takes a thread id and a <code>void**</code> as input and blocks untils the thread identified by <code>thread_id</code> has terminated and then returns with the return value of the thread stored in the <code>void**</code>. The function returns an integer to indicate whether or not the join was successful or not.</li>
+</ul>
+<p>Since the complete standard is really big and trying to implement a whole pthread clone will be cumbersome and difficult . Furthermore, it will require some hardware dependent logic. So we will only create a simple variant of it that implements these two functions and works only on amd64 machines. Since this is a really simple thread libary with no way to kill or cancel threads or any synchronization primitives, lets call our library simple thread or <a href="https://github.com/hsiam261/sthread"><code>sthread</code></a>.</p>
+<h2 id="preemptive-threads-vs-processes-from-the-perspective-of-the-user-and-the-operating-system">Preemptive Threads vs Processes from the Perspective of the User and the Operating System</h2>
+<p>We want our operating system to be fully in charge of scheduling our threads and treat our threads as first class citizens like processes. If multiple processors are available, we want multiple threads from the same process to be able to be scheduled together in different processors at the same time. We want threads to be preempted by hardware due to timer interrupts just like processes do. So the question becomes what is the distinction between a thread and a process?</p>
+<p>Process is an abstraction provided by the operating system to the user for a instance of a binary running in isolation. The key word to focues here is the isolation. In modern operating systems many processes concurrently run at the same time and we do not want events in one process to interfere with a different process. If such isolation was not provided, application programmers would constantly need to worry about how other processes can interfere with their applications and need to guard against them. A CPU executes hardware instructions by fetching instructions from memory one at a time and running it. An instruction can either read or write to registers or memory. To provide isolation to processes, the operating system virtualizes both memory and CPU, giving the illusion to a process that it is the sole user of the CPU and the full memory where in fact many processes are using it.</p>
+<p>Virtualization of CPU happens by constantly pausing processes and storing the CPU state (register file) in a safe place in memory. When the OS want to resume executing the process, it loads those register values back into the registers of the CPU and it was as if the process never paused in the first place.</p>
+<p>Virtualization of the memory happens by adding levels of indirection between the memory fetches. The Operating System gives the process the illusion that it has complete access to all addresses in a memory space. This memory space can even be larger than the size of the actual main memory. Addresses in this memory space is called the virtual address. The OS keeps a per process datastructure called the pagetable that maps virtual adresses in its virtual address space to address in its physical memory or physical storage (in case of page swapping). The operating system makes sure that the physical address mapped by two virtual addresses (not necessarily of the same process) never conflict. Physical address mapped by a virtual address of a process does not necessarily even remain the same during the execution of the whole process. Any time an instruction refers to an address, a specific hardware called the MMU or the Memory Mapping Unit consults with the pagetable of the process with the help of the OS and traslates the virtual address to its physical and then operates on that physical address instead.</p>
+<p>When the operating system operating system pauses a process and resumes another one (this process is called a context switch), it saves the CPU context of the pausing process and restores the CPU context of the resuming process and updates the pointer of the pagetable of the current process.</p>
+<p>Since two separate processes have different pagetables, there is no way for one process to read or write to the address space of another i.e they do not share an address space. This makes it difficult for two separate processes to co-ordinate between each other and require fancy things like IPC. This is the key distinction between a preemptive thread and a process. All threads of a process have separate CPU contexts and stacks, but they share the same address space or page table. This makes it easy to co-ordinate between threads. Furthermore since, creating a new page table takes storage and time, spawing threads are faster than spawning process and have a much smaller memory footprint.</p>
+<p>CPU context and address space aren&rsquo;t the only state of a process that a thread can inherit. Posix standards posit that threads share the following states with its parent process:</p>
+<ul>
+<li>process ID</li>
+<li>parent process ID</li>
+<li>process group ID and session ID</li>
+<li>controlling terminal</li>
+<li>user and group IDs</li>
+<li>open file descriptors</li>
+<li>record locks (see <a href="https://man7.org/linux/man-pages/man2/fcntl.2.html"><code>fcntl(2)</code></a>)</li>
+<li>signal dispositions</li>
+<li>file mode creation mask (<a href="https://man7.org/linux/man-pages/man2/umask.2.html"><code>umask(2)</code></a>)</li>
+<li>current directory (<a href="https://man7.org/linux/man-pages/man2/chdir.2.html"><code>chdir(2)</code></a>) and root directory (<a href="https://man7.org/linux/man-pages/man2/chroot.2.html"><code>chroot(2)</code></a>)</li>
+<li>interval timers (<a href="https://man7.org/linux/man-pages/man2/setitimer.2.html"><code>setitimer(2)</code></a>) and POSIX timers (<a href="https://man7.org/linux/man-pages/man2/timer_create.2.html"><code>timer_create(2)</code></a>)</li>
+<li>nice value (<a href="https://man7.org/linux/man-pages/man2/setpriority.2.html"><code>setpriority(2)</code></a>)</li>
+<li>resource limits (<a href="https://man7.org/linux/man-pages/man2/setrlimit.2.html"><code>setrlimit(2)</code></a>)</li>
+<li>measurements of the consumption of CPU time (<a href="times(2)"><code>times(2)</code></a>) and resources (<a href="https://man7.org/linux/man-pages/man2/getrusage.2.html"><code>getrusage(2)</code></a>)</li>
+</ul>
+<p>Posix standard also mention that the following attributes of each thread must be unique:</p>
+<ul>
+<li>stack</li>
+<li>thread ID (the <code>pthread_t</code> data type)</li>
+<li>signal mask (<a href="https://man7.org/linux/man-pages/man3/pthread_sigmask.3.html"><code>pthread_sigmask(3)</code></a>)</li>
+<li>the <a href="https://man7.org/linux/man-pages/man3/errno.3.html"><code>errno</code></a> variable</li>
+<li>alternate signal stack (<a href="https://man7.org/linux/man-pages/man2/sigaltstack.2.html"><code>sigaltstack(2)</code></a>)</li>
+<li>real-time scheduling policy and priority (<a href="https://man7.org/linux/man-pages/man7/sched.7.html"><code>sched(7)</code></a>)</li>
+</ul>
+<p>The following Linux-specific features are also per-thread:</p>
+<ul>
+<li>capabilities (see <a href="https://man7.org/linux/man-pages/man7/capabilities.7.html"><code>capabilities(7)</code></a>)</li>
+<li>CPU affinity (<a href="https://man7.org/linux/man-pages/man7/capabilities.7.html"><code>sched_setaffinity(2)</code></a>)</li>
+</ul>
+<h2 id="the-data-structures">The Data Structures</h2>
+<p>Posix Threads define the <code>pthread_t</code> type to be the user visible type to represent threads. <code>pthread_t</code> is basically a number and it stores the complete state of the thread. In <code>glibc</code>&rsquo;s implementation of NPTL, <code>pthread_t</code> is just a memory address that points to a different struct that actually stores the thread states.</p>
+<!-- References:
+- https://sourceware.org/git/?p=glibc.git;a=blob;f=htl/pt-internal.h;h=ec71fe1867f986bddc993905554166cb368f0311;hb=7c22dcda27743658b6b8ea479283b384ad56bd5a#l62
+- https://sourceware.org/git/?p=glibc.git;a=blob;f=sysdeps/nptl/bits/pthreadtypes.h;h=bace817f0b7e0873d66f3ee495e2cb1b92c6f32b;hb=7c22dcda27743658b6b8ea479283b384ad56bd5a#l27 -->
+<p>Using the mentioned attributes that a Posix complaint thread has, we can create a <code>sthread</code> struct. Since, we won&rsquo;t be creating a much simpler version, not all attributes will be present in our threads implementation in <code>sthread</code>.</p>
+<figure class="highlight">
+  <div class="code-block-header">
+    <div class="title">
+      <tt>sthread.h</tt>
+    </div>
+    <div class="code-block-header__button-tray">
+      <button class="code-block__copy" data-code='// filename: sthread.h
+
+#ifndef STHREAD_H
+#define STHREAD_H
+
+#include &lt;stdint.h&gt;
+#include &lt;stddef.h&gt;
+
+typedef struct sthread_attr {
+	void *stack_ptr;
+	size_t stack_size;
+} sthread_attr;
+
+typedef struct sthread {
+	int return_value;
+	void* result;
+	uint32_t lock;
+	uint64_t tid;
+	int pidfd;
+	sthread_attr thread_attributes;
+} sthread;
+
+typedef sthread* sthread_t;
+
+int sthread_create(sthread_t* thread, sthread_attr* thread_attr, void * (*func)(void *), void* args);
+int sthread_join(sthread_t thread, void** ret_val);
+
+#endif'>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M64 464l224 0c8.8 0 16-7.2 16-16l0-64 48 0 0 64c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 224c0-35.3 28.7-64 64-64l64 0 0 48-64 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16zM224 304l224 0c8.8 0 16-7.2 16-16l0-224c0-8.8-7.2-16-16-16L224 48c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16zm-64-16l0-224c0-35.3 28.7-64 64-64L448 0c35.3 0 64 28.7 64 64l0 224c0 35.3-28.7 64-64 64l-224 0c-35.3 0-64-28.7-64-64z"/></svg>
+        <span>Copy</span>
+      </button>
+      <button class="code-block__collapse">
+        <svg class="code-block__collapse-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg></button>
+    </div>
+  </div>
+  <div class="code-block-expandible code-block-expandible--open">
+    <div class="code-block-wrapper" style="min-height: 0px;">
+      <pre tabindex="0" class="chroma">
+        <code class="language-c" data-lang="c"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#080;font-style:italic">// filename: sthread.h
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span><span style="color:#080;font-style:italic"></span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span><span style="color:#080">#ifndef STHREAD_H
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span><span style="color:#080">#define STHREAD_H
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span><span style="color:#080"></span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span><span style="color:#080">#include</span> <span style="color:#080">&lt;stdint.h&gt;</span><span style="color:#080">
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span><span style="color:#080">#include</span> <span style="color:#080">&lt;stddef.h&gt;</span><span style="color:#080">
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span><span style="color:#080"></span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span><span style="color:#a2f;font-weight:bold">typedef</span> <span style="color:#a2f;font-weight:bold">struct</span> sthread_attr {
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>	<span style="color:#0b0;font-weight:bold">void</span> <span style="color:#666">*</span>stack_ptr;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>	<span style="color:#0b0;font-weight:bold">size_t</span> stack_size;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>} sthread_attr;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span><span style="color:#a2f;font-weight:bold">typedef</span> <span style="color:#a2f;font-weight:bold">struct</span> sthread {
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span>	<span style="color:#0b0;font-weight:bold">int</span> return_value;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span>	<span style="color:#0b0;font-weight:bold">void</span><span style="color:#666">*</span> result;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span>	<span style="color:#0b0;font-weight:bold">uint32_t</span> lock;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span>	<span style="color:#0b0;font-weight:bold">uint64_t</span> tid;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span><span>	<span style="color:#0b0;font-weight:bold">int</span> pidfd;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span><span>	sthread_attr thread_attributes;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span><span>} sthread;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span><span><span style="color:#a2f;font-weight:bold">typedef</span> sthread<span style="color:#666">*</span> <span style="color:#0b0;font-weight:bold">sthread_t</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span><span><span style="color:#0b0;font-weight:bold">int</span> <span style="color:#00a000">sthread_create</span>(<span style="color:#0b0;font-weight:bold">sthread_t</span><span style="color:#666">*</span> <span style="color:#a2f;font-weight:bold">thread</span>, sthread_attr<span style="color:#666">*</span> thread_attr, <span style="color:#0b0;font-weight:bold">void</span> <span style="color:#666">*</span> (<span style="color:#666">*</span>func)(<span style="color:#0b0;font-weight:bold">void</span> <span style="color:#666">*</span>), <span style="color:#0b0;font-weight:bold">void</span><span style="color:#666">*</span> args);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span><span><span style="color:#0b0;font-weight:bold">int</span> <span style="color:#00a000">sthread_join</span>(<span style="color:#0b0;font-weight:bold">sthread_t</span> <span style="color:#a2f;font-weight:bold">thread</span>, <span style="color:#0b0;font-weight:bold">void</span><span style="color:#666">**</span> ret_val);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span><span><span style="color:#080">#endif</span></span></span></code>
+        <code class="language-c" data-lang="c"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 1</span><span><span style="color:#8a93a5;font-style:italic">// filename: sthread.h
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 2</span><span><span style="color:#8a93a5;font-style:italic"></span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 3</span><span><span style="color:#8a93a5;font-style:italic">#ifndef STHREAD_H
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 4</span><span><span style="color:#8a93a5;font-style:italic">#define STHREAD_H
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 5</span><span><span style="color:#8a93a5;font-style:italic"></span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 6</span><span><span style="color:#8a93a5;font-style:italic">#include</span> <span style="color:#8a93a5;font-style:italic">&lt;stdint.h&gt;</span><span style="color:#8a93a5;font-style:italic">
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 7</span><span><span style="color:#8a93a5;font-style:italic">#include</span> <span style="color:#8a93a5;font-style:italic">&lt;stddef.h&gt;</span><span style="color:#8a93a5;font-style:italic">
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 8</span><span><span style="color:#8a93a5;font-style:italic"></span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 9</span><span><span style="color:#76a9f9">typedef</span> <span style="color:#76a9f9">struct</span> <span style="color:#aa89ea">sthread_attr</span> <span style="color:#abb2bf">{</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">10</span><span>	<span style="color:#e5c07b">void</span> <span style="color:#54b1c7">*</span><span style="color:#aa89ea">stack_ptr</span><span style="color:#abb2bf">;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">11</span><span>	<span style="color:#e5c07b">size_t</span> <span style="color:#aa89ea">stack_size</span><span style="color:#abb2bf">;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">12</span><span><span style="color:#abb2bf">}</span> <span style="color:#aa89ea">sthread_attr</span><span style="color:#abb2bf">;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">13</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">14</span><span><span style="color:#76a9f9">typedef</span> <span style="color:#76a9f9">struct</span> <span style="color:#aa89ea">sthread</span> <span style="color:#abb2bf">{</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">15</span><span>	<span style="color:#e5c07b">int</span> <span style="color:#aa89ea">return_value</span><span style="color:#abb2bf">;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">16</span><span>	<span style="color:#e5c07b">void</span><span style="color:#54b1c7">*</span> <span style="color:#aa89ea">result</span><span style="color:#abb2bf">;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">17</span><span>	<span style="color:#e5c07b">uint32_t</span> <span style="color:#aa89ea">lock</span><span style="color:#abb2bf">;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">18</span><span>	<span style="color:#e5c07b">uint64_t</span> <span style="color:#aa89ea">tid</span><span style="color:#abb2bf">;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">19</span><span>	<span style="color:#e5c07b">int</span> <span style="color:#aa89ea">pidfd</span><span style="color:#abb2bf">;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">20</span><span>	<span style="color:#aa89ea">sthread_attr</span> <span style="color:#aa89ea">thread_attributes</span><span style="color:#abb2bf">;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">21</span><span><span style="color:#abb2bf">}</span> <span style="color:#aa89ea">sthread</span><span style="color:#abb2bf">;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">22</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">23</span><span><span style="color:#76a9f9">typedef</span> <span style="color:#aa89ea">sthread</span><span style="color:#54b1c7">*</span> <span style="color:#e5c07b">sthread_t</span><span style="color:#abb2bf">;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">24</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">25</span><span><span style="color:#e5c07b">int</span> <span style="color:#00b1f7">sthread_create</span><span style="color:#abb2bf">(</span><span style="color:#e5c07b">sthread_t</span><span style="color:#54b1c7">*</span> <span style="color:#76a9f9">thread</span><span style="color:#abb2bf">,</span> <span style="color:#aa89ea">sthread_attr</span><span style="color:#54b1c7">*</span> <span style="color:#aa89ea">thread_attr</span><span style="color:#abb2bf">,</span> <span style="color:#e5c07b">void</span> <span style="color:#54b1c7">*</span> <span style="color:#abb2bf">(</span><span style="color:#54b1c7">*</span><span style="color:#aa89ea">func</span><span style="color:#abb2bf">)(</span><span style="color:#e5c07b">void</span> <span style="color:#54b1c7">*</span><span style="color:#abb2bf">),</span> <span style="color:#e5c07b">void</span><span style="color:#54b1c7">*</span> <span style="color:#aa89ea">args</span><span style="color:#abb2bf">);</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">26</span><span><span style="color:#e5c07b">int</span> <span style="color:#00b1f7">sthread_join</span><span style="color:#abb2bf">(</span><span style="color:#e5c07b">sthread_t</span> <span style="color:#76a9f9">thread</span><span style="color:#abb2bf">,</span> <span style="color:#e5c07b">void</span><span style="color:#54b1c7">**</span> <span style="color:#aa89ea">ret_val</span><span style="color:#abb2bf">);</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">27</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">28</span><span><span style="color:#8a93a5;font-style:italic">#endif</span></span></span></code>
+      </pre>
+    </div>
+  </div>
+</figure>
+<h2 id="creating-a-thread">Creating A Thread</h2>
+<p>From our discussion, we came to the conclusion that a preemptive thread whose scheduling is fully managed by the operating system is just a &ldquo;process&rdquo; that shares a bunch of attributes with some other processes, the most important of which is the address space. Thus, using the Linux Process Creation API we may be able to create such a thread. The following list mentions some of the functions in Linux that can be used to create processes:</p>
+<ul>
+<li><a href="https://man7.org/linux/man-pages/man2/fork.2.html"><code>fork</code></a></li>
+<li><a href="https://man7.org/linux/man-pages/man2/vfork.2.html"><code>vfork</code></a></li>
+<li><a href="https://man7.org/linux/man-pages/man3/posix_spawn.3.html"><code>posix_spawn</code></a></li>
+<li><a href="https://man7.org/linux/man-pages/man2/clone.2.html"><code>clone</code></a></li>
+<li><a href="https://man7.org/linux/man-pages/man2/clone.2.html"><code>clone2</code></a></li>
+<li><a href="https://man7.org/linux/man-pages/man2/clone.2.html"><code>clone3</code></a></li>
+</ul>
+<p><a href="https://man7.org/linux/man-pages/man2/fork.2.html"><code>fork</code></a> is the most well known among the methods, but lacks the proper granularity to create a process that shares an address space. The <a href="https://man7.org/linux/man-pages/man2/clone.2.html"><code>clone3</code></a> systemcall is the most versitile among all these methods and is perfect for our use case.</p>
+<p>The <code>clone3</code> system call has two arguments:</p>
+<ul>
+<li><code>cl_args</code>: A pointer to a <code>clone_args</code> struct</li>
+<li><code>size</code>: size of a <code>clone_args</code> struct (kept so that system call can later be extended)</li>
+</ul>
+<p>The <code>clone_args</code> struct has the following schema:</p>
+<figure class="highlight">
+  <div class="code-block-header">
+    <div class="title">
+      <tt></tt>
+    </div>
+    <div class="code-block-header__button-tray">
+      <button class="code-block__copy" data-code='struct clone_args {
+    u64 flags;        /* Flags bit mask */
+    u64 pidfd;        /* Where to store PID file descriptor
+                         (int *) */
+    u64 child_tid;    /* Where to store child TID,
+                         in child&#39;s memory (pid_t *) */
+    u64 parent_tid;   /* Where to store child TID,
+                         in parent&#39;s memory (pid_t *) */
+    u64 exit_signal;  /* Signal to deliver to parent on
+                         child termination */
+    u64 stack;        /* Pointer to lowest byte of stack */
+    u64 stack_size;   /* Size of stack */
+    u64 tls;          /* Location of new TLS */
+    u64 set_tid;      /* Pointer to a pid_t array
+                         (since Linux 5.5) */
+    u64 set_tid_size; /* Number of elements in set_tid
+                         (since Linux 5.5) */
+    u64 cgroup;       /* File descriptor for target cgroup
+                         of child (since Linux 5.7) */
+};'>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M64 464l224 0c8.8 0 16-7.2 16-16l0-64 48 0 0 64c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 224c0-35.3 28.7-64 64-64l64 0 0 48-64 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16zM224 304l224 0c8.8 0 16-7.2 16-16l0-224c0-8.8-7.2-16-16-16L224 48c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16zm-64-16l0-224c0-35.3 28.7-64 64-64L448 0c35.3 0 64 28.7 64 64l0 224c0 35.3-28.7 64-64 64l-224 0c-35.3 0-64-28.7-64-64z"/></svg>
+        <span>Copy</span>
+      </button>
+      <button class="code-block__collapse">
+        <svg class="code-block__collapse-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg></button>
+    </div>
+  </div>
+  <div class="code-block-expandible code-block-expandible--open">
+    <div class="code-block-wrapper" style="min-height: 0px;">
+      <pre tabindex="0" class="chroma">
+        <code class="language-c" data-lang="c"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#a2f;font-weight:bold">struct</span> clone_args {
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>    u64 flags;        <span style="color:#080;font-style:italic">/* Flags bit mask */</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>    u64 pidfd;        <span style="color:#080;font-style:italic">/* Where to store PID file descriptor
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span><span style="color:#080;font-style:italic">                         (int *) */</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>    u64 child_tid;    <span style="color:#080;font-style:italic">/* Where to store child TID,
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span><span style="color:#080;font-style:italic">                         in child&#39;s memory (pid_t *) */</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>    u64 parent_tid;   <span style="color:#080;font-style:italic">/* Where to store child TID,
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span><span style="color:#080;font-style:italic">                         in parent&#39;s memory (pid_t *) */</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>    u64 exit_signal;  <span style="color:#080;font-style:italic">/* Signal to deliver to parent on
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span><span style="color:#080;font-style:italic">                         child termination */</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>    u64 stack;        <span style="color:#080;font-style:italic">/* Pointer to lowest byte of stack */</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>    u64 stack_size;   <span style="color:#080;font-style:italic">/* Size of stack */</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span>    u64 tls;          <span style="color:#080;font-style:italic">/* Location of new TLS */</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span>    u64 set_tid;      <span style="color:#080;font-style:italic">/* Pointer to a pid_t array
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span><span style="color:#080;font-style:italic">                         (since Linux 5.5) */</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span>    u64 set_tid_size; <span style="color:#080;font-style:italic">/* Number of elements in set_tid
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span><span style="color:#080;font-style:italic">                         (since Linux 5.5) */</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span>    u64 cgroup;       <span style="color:#080;font-style:italic">/* File descriptor for target cgroup
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span><span><span style="color:#080;font-style:italic">                         of child (since Linux 5.7) */</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span><span>};</span></span></code>
+        <code class="language-c" data-lang="c"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 1</span><span><span style="color:#76a9f9">struct</span> <span style="color:#aa89ea">clone_args</span> <span style="color:#abb2bf">{</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 2</span><span>    <span style="color:#aa89ea">u64</span> <span style="color:#aa89ea">flags</span><span style="color:#abb2bf">;</span>        <span style="color:#8a93a5;font-style:italic">/* Flags bit mask */</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 3</span><span>    <span style="color:#aa89ea">u64</span> <span style="color:#aa89ea">pidfd</span><span style="color:#abb2bf">;</span>        <span style="color:#8a93a5;font-style:italic">/* Where to store PID file descriptor
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 4</span><span><span style="color:#8a93a5;font-style:italic">                         (int *) */</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 5</span><span>    <span style="color:#aa89ea">u64</span> <span style="color:#aa89ea">child_tid</span><span style="color:#abb2bf">;</span>    <span style="color:#8a93a5;font-style:italic">/* Where to store child TID,
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 6</span><span><span style="color:#8a93a5;font-style:italic">                         in child&#39;s memory (pid_t *) */</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 7</span><span>    <span style="color:#aa89ea">u64</span> <span style="color:#aa89ea">parent_tid</span><span style="color:#abb2bf">;</span>   <span style="color:#8a93a5;font-style:italic">/* Where to store child TID,
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 8</span><span><span style="color:#8a93a5;font-style:italic">                         in parent&#39;s memory (pid_t *) */</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 9</span><span>    <span style="color:#aa89ea">u64</span> <span style="color:#aa89ea">exit_signal</span><span style="color:#abb2bf">;</span>  <span style="color:#8a93a5;font-style:italic">/* Signal to deliver to parent on
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">10</span><span><span style="color:#8a93a5;font-style:italic">                         child termination */</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">11</span><span>    <span style="color:#aa89ea">u64</span> <span style="color:#aa89ea">stack</span><span style="color:#abb2bf">;</span>        <span style="color:#8a93a5;font-style:italic">/* Pointer to lowest byte of stack */</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">12</span><span>    <span style="color:#aa89ea">u64</span> <span style="color:#aa89ea">stack_size</span><span style="color:#abb2bf">;</span>   <span style="color:#8a93a5;font-style:italic">/* Size of stack */</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">13</span><span>    <span style="color:#aa89ea">u64</span> <span style="color:#aa89ea">tls</span><span style="color:#abb2bf">;</span>          <span style="color:#8a93a5;font-style:italic">/* Location of new TLS */</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">14</span><span>    <span style="color:#aa89ea">u64</span> <span style="color:#aa89ea">set_tid</span><span style="color:#abb2bf">;</span>      <span style="color:#8a93a5;font-style:italic">/* Pointer to a pid_t array
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">15</span><span><span style="color:#8a93a5;font-style:italic">                         (since Linux 5.5) */</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">16</span><span>    <span style="color:#aa89ea">u64</span> <span style="color:#aa89ea">set_tid_size</span><span style="color:#abb2bf">;</span> <span style="color:#8a93a5;font-style:italic">/* Number of elements in set_tid
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">17</span><span><span style="color:#8a93a5;font-style:italic">                         (since Linux 5.5) */</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">18</span><span>    <span style="color:#aa89ea">u64</span> <span style="color:#aa89ea">cgroup</span><span style="color:#abb2bf">;</span>       <span style="color:#8a93a5;font-style:italic">/* File descriptor for target cgroup
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">19</span><span><span style="color:#8a93a5;font-style:italic">                         of child (since Linux 5.7) */</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">20</span><span><span style="color:#abb2bf">};</span></span></span></code>
+      </pre>
+    </div>
+  </div>
+</figure>
+<p><code>clone3</code> systemcall is useful in our case because we can pass in a custom address for stack, it&rsquo;s size, address to store metadata about created thread in both parent and child processes. Furthermore, we can use the flags attribute to granularly control the behavior of the newly created process. The list and description of all the flags can be found <a href="https://man7.org/linux/man-pages/man2/clone.2.html">here</a>. But some of the ones that are important to us are:</p>
+<ul>
+<li><code>CLONE_VM</code>: when set, child process shares the same address space as the parent</li>
+<li><code>CLONE_THREAD</code>: child is placed in the same thread group as the parent</li>
+<li><code>CLONE_SIGHAND</code>: child shares the same signal handlers as the parent</li>
+<li><code>CLONE_FILES</code>: parent and child shares file descriptors</li>
+<li><code>CLONE_FS</code>: parent and child share current directory and current root</li>
+<li><code>CLONE_PARENT_SETTID</code>: store child thread id by at location pointed by <code>parent_tid</code> in parent process</li>
+<li><code>CLONE_CHILD_CLEARTID</code>: clear location pointed by <code>child_tid</code> in parent process after child terminates</li>
+</ul>
+<p><code>clone3</code> is a systemcall and does not have a C wrapper. It must be called with assembly. When called, the <code>clone3</code> systemcall</p>
+<ul>
+<li>return child process pid (a positive number) in <code>rax</code> register in parent if successful</li>
+<li>returns negative number whose absolute value is the error code in <code>rax</code> register in parent if the syscall failed</li>
+<li>sets <code>rax</code> register as zero in child process</li>
+</ul>
+<p>Using the clone3 system call we can attempt to create our threads as follows:</p>
+<ul>
+<li>first allocate a stack</li>
+<li>set <code>(CLONE_VM | CLONE_THREAD | CLONE_SIGHAND | CLONE_FILES | CLONE_FS | CLONE_PARENT_SETTID | CLONE_CHILD_CLEARTID)</code> as clone flags</li>
+<li>setup and call <code>clone3</code></li>
+<li>check the <code>rax</code> register and decide whether or not you are in the parent process or not</li>
+<li>in the parent process, return the pid</li>
+<li>in the child process, call the function that the thread is supposed to start on</li>
+</ul>
+<p>There are more subtleties to it. We can just directly call the function in the child process. Because threads. Because threads require setting up return values. The parent process must be able to join on the child thread and recieve the return value. So we would need to wrap around the original function with a wrapper as follows:</p>
+<figure class="highlight">
+  <div class="code-block-header">
+    <div class="title">
+      <tt></tt>
+    </div>
+    <div class="code-block-header__button-tray">
+      <button class="code-block__copy" data-code='static void thread_done(sthread_t tcb, void* ret_val) {
+	tcb-&gt;lock = 1;
+	tcb-&gt;return_value = ret_val;
+	syscall(SYS_futex, &amp;tcb-&gt;lock, FUTEX_WAKE, INT_MAX, NULL, NULL, 0);
+	syscall(SYS_exit, 0);
+}
+
+static void thread_func_wrapper(void *(*func)(void *), void * args, sthread_t tcb) {
+	void* ret = func(args);
+	thread_done(tcb, ret);
+}'>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M64 464l224 0c8.8 0 16-7.2 16-16l0-64 48 0 0 64c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 224c0-35.3 28.7-64 64-64l64 0 0 48-64 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16zM224 304l224 0c8.8 0 16-7.2 16-16l0-224c0-8.8-7.2-16-16-16L224 48c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16zm-64-16l0-224c0-35.3 28.7-64 64-64L448 0c35.3 0 64 28.7 64 64l0 224c0 35.3-28.7 64-64 64l-224 0c-35.3 0-64-28.7-64-64z"/></svg>
+        <span>Copy</span>
+      </button>
+      <button class="code-block__collapse">
+        <svg class="code-block__collapse-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg></button>
+    </div>
+  </div>
+  <div class="code-block-expandible code-block-expandible--open">
+    <div class="code-block-wrapper" style="min-height: 0px;">
+      <pre tabindex="0" class="chroma">
+        <code class="language-c" data-lang="c"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#a2f;font-weight:bold">static</span> <span style="color:#0b0;font-weight:bold">void</span> <span style="color:#00a000">thread_done</span>(<span style="color:#0b0;font-weight:bold">sthread_t</span> tcb, <span style="color:#0b0;font-weight:bold">void</span><span style="color:#666">*</span> ret_val) {
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>	tcb<span style="color:#666">-&gt;</span>lock <span style="color:#666">=</span> <span style="color:#666">1</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>	tcb<span style="color:#666">-&gt;</span>return_value <span style="color:#666">=</span> ret_val;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>	<span style="color:#00a000">syscall</span>(SYS_futex, <span style="color:#666">&amp;</span>tcb<span style="color:#666">-&gt;</span>lock, FUTEX_WAKE, INT_MAX, <span style="color:#a2f">NULL</span>, <span style="color:#a2f">NULL</span>, <span style="color:#666">0</span>);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>	<span style="color:#00a000">syscall</span>(SYS_exit, <span style="color:#666">0</span>);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>}
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span><span style="color:#a2f;font-weight:bold">static</span> <span style="color:#0b0;font-weight:bold">void</span> <span style="color:#00a000">thread_func_wrapper</span>(<span style="color:#0b0;font-weight:bold">void</span> <span style="color:#666">*</span>(<span style="color:#666">*</span>func)(<span style="color:#0b0;font-weight:bold">void</span> <span style="color:#666">*</span>), <span style="color:#0b0;font-weight:bold">void</span> <span style="color:#666">*</span> args, <span style="color:#0b0;font-weight:bold">sthread_t</span> tcb) {
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>	<span style="color:#0b0;font-weight:bold">void</span><span style="color:#666">*</span> ret <span style="color:#666">=</span> <span style="color:#00a000">func</span>(args);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>	<span style="color:#00a000">thread_done</span>(tcb, ret);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>}</span></span></code>
+        <code class="language-c" data-lang="c"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 1</span><span><span style="color:#76a9f9">static</span> <span style="color:#e5c07b">void</span> <span style="color:#00b1f7">thread_done</span><span style="color:#abb2bf">(</span><span style="color:#e5c07b">sthread_t</span> <span style="color:#aa89ea">tcb</span><span style="color:#abb2bf">,</span> <span style="color:#e5c07b">void</span><span style="color:#54b1c7">*</span> <span style="color:#aa89ea">ret_val</span><span style="color:#abb2bf">)</span> <span style="color:#abb2bf">{</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 2</span><span>	<span style="color:#aa89ea">tcb</span><span style="color:#54b1c7">-&gt;</span><span style="color:#aa89ea">lock</span> <span style="color:#54b1c7">=</span> <span style="color:#d19a66">1</span><span style="color:#abb2bf">;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 3</span><span>	<span style="color:#aa89ea">tcb</span><span style="color:#54b1c7">-&gt;</span><span style="color:#aa89ea">return_value</span> <span style="color:#54b1c7">=</span> <span style="color:#aa89ea">ret_val</span><span style="color:#abb2bf">;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 4</span><span>	<span style="color:#00b1f7">syscall</span><span style="color:#abb2bf">(</span><span style="color:#aa89ea">SYS_futex</span><span style="color:#abb2bf">,</span> <span style="color:#54b1c7">&amp;</span><span style="color:#aa89ea">tcb</span><span style="color:#54b1c7">-&gt;</span><span style="color:#aa89ea">lock</span><span style="color:#abb2bf">,</span> <span style="color:#aa89ea">FUTEX_WAKE</span><span style="color:#abb2bf">,</span> <span style="color:#aa89ea">INT_MAX</span><span style="color:#abb2bf">,</span> <span style="color:#e5c07b">NULL</span><span style="color:#abb2bf">,</span> <span style="color:#e5c07b">NULL</span><span style="color:#abb2bf">,</span> <span style="color:#d19a66">0</span><span style="color:#abb2bf">);</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 5</span><span>	<span style="color:#00b1f7">syscall</span><span style="color:#abb2bf">(</span><span style="color:#aa89ea">SYS_exit</span><span style="color:#abb2bf">,</span> <span style="color:#d19a66">0</span><span style="color:#abb2bf">);</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 6</span><span><span style="color:#abb2bf">}</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 7</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 8</span><span><span style="color:#76a9f9">static</span> <span style="color:#e5c07b">void</span> <span style="color:#00b1f7">thread_func_wrapper</span><span style="color:#abb2bf">(</span><span style="color:#e5c07b">void</span> <span style="color:#54b1c7">*</span><span style="color:#abb2bf">(</span><span style="color:#54b1c7">*</span><span style="color:#aa89ea">func</span><span style="color:#abb2bf">)(</span><span style="color:#e5c07b">void</span> <span style="color:#54b1c7">*</span><span style="color:#abb2bf">),</span> <span style="color:#e5c07b">void</span> <span style="color:#54b1c7">*</span> <span style="color:#aa89ea">args</span><span style="color:#abb2bf">,</span> <span style="color:#e5c07b">sthread_t</span> <span style="color:#aa89ea">tcb</span><span style="color:#abb2bf">)</span> <span style="color:#abb2bf">{</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 9</span><span>	<span style="color:#e5c07b">void</span><span style="color:#54b1c7">*</span> <span style="color:#aa89ea">ret</span> <span style="color:#54b1c7">=</span> <span style="color:#00b1f7">func</span><span style="color:#abb2bf">(</span><span style="color:#aa89ea">args</span><span style="color:#abb2bf">);</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">10</span><span>	<span style="color:#00b1f7">thread_done</span><span style="color:#abb2bf">(</span><span style="color:#aa89ea">tcb</span><span style="color:#abb2bf">,</span> <span style="color:#aa89ea">ret</span><span style="color:#abb2bf">);</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">11</span><span><span style="color:#abb2bf">}</span></span></span></code>
+      </pre>
+    </div>
+  </div>
+</figure>
+<p>The thread uses a futex for joining. And when the thread function is done executing, a wrapper function must store the return value of that function into the <code>pthread</code> struct and signal the futex to wake any thread that joining on the thread.</p>
+<p>So the <code>pthread_create</code> function would look something like this:</p>
+<figure class="highlight">
+  <div class="code-block-header">
+    <div class="title">
+      <tt>sthread_create.c</tt>
+    </div>
+    <div class="code-block-header__button-tray">
+      <button class="code-block__copy" data-code='int sthread_create(sthread_t* thread, sthread_attr* thread_attr, void * (*func)(void *), void* args) {
+	if(thread_attr == NULL) {
+		thread_attr = &amp;default_sthread_attr;
+	}
+
+	void* stack_ptr = allocate_stack(thread_attr);
+	*thread = stack_ptr;
+	sthread_t tcb = stack_ptr;
+	tcb-&gt;lock = 0;
+
+	int clone_flags = (CLONE_VM | CLONE_THREAD | CLONE_SIGHAND |
+			CLONE_FILES | CLONE_FS | CLONE_PARENT_SETTID |
+			CLONE_CHILD_CLEARTID);
+
+	struct clone_args cl_args = {
+		.flags = clone_flags,
+		.child_tid = (__u64)&amp;(tcb-&gt;tid),
+		.pidfd = (__u64)&amp;(tcb-&gt;tid),
+		.stack = (__u64)(stack_ptr),
+		.stack_size = thread_attr-&gt;stack_size
+	};
+
+	pid_t pid;
+
+	// These variables are required just so that
+	// we won&#39;t need to manually handle setting up
+	// the registers in assembly
+	// only relevant to the assembly code
+	size_t sz = sizeof(struct clone_args);
+	__u64 clone_args_addr = &amp;cl_args;
+	__u64 wrapper_func_addr = &amp;thread_func_wrapper;
+
+	__asm__ volatile(
+		&#34;movq %%rax, %%r15\n\t&#34; // save value of rax
+		// The next 4 values need to be copied into registers because
+		// they are required by the child thread and the child won&#39;t be able
+		// to read them from stack variables since the stack would change
+		&#34;movq %5, %%rbx\n\t&#34;    // start thread func (wrapper over func) need
+		&#34;movq %2, %%r12\n\t&#34;    // start thread func ARGUMENT 0: func need
+		&#34;movq %6, %%r13\n\t&#34;    // start thread func ARGUMENT 1: args need
+		&#34;movq %7, %%r14\n\t&#34;	// start thread func ARGUMENT 2: tcb need
+		// setting the syscall value
+		&#34;movq $0, %%rax\n\t&#34;
+		&#34;mov %1, %%eax\n\t&#34;     // SYSTEM CALL NUMBER : SYS_clone3
+		&#34;movq %3, %%rdi\n\t&#34;    // zeroth argument to clone3: &amp;cl_args
+		&#34;movq %4, %%rsi\n\t&#34;    // first argument to clone3: sizeof(cl_args)
+		&#34;syscall\n\t&#34;		// Linux/amd64 system call */
+		&#34;testq %%rax,%%rax\n\t&#34;	// check return value */
+		&#34;jne 1f\n\t&#34;		// jump if parent (if return value is non zero)*/
+		// call the function in child thread
+		&#34;movq %%r12, %%rdi\n\t&#34;    // FUNCTION ARGUMENT 0: func
+		&#34;movq %%r13, %%rsi\n\t&#34;    // FUNCTION ARGUMENT 1: args
+		&#34;movq %%r14, %%rdx\n\t&#34;	// FUNCTION ARGUMENT 2: tcb
+		&#34;callq *%%rbx\n\t&#34;	// start subthread function */
+		&#34;1:\n\t&#34; // parent thread will jump to here
+		&#34;movq %%rax, %0\n\t&#34; //copy syscall return to pid in parent thread
+		&#34;movq %%r15, %%rax\t&#34; //restore rax value in in parent thread
+		:&#34;=m&#34; (pid)
+		:&#34;i&#34; (SYS_clone3),
+		&#34;m&#34; (func),
+		&#34;m&#34; (clone_args_addr),
+		&#34;m&#34; (sz),
+		&#34;m&#34; (wrapper_func_addr),
+		&#34;m&#34; (args),
+		&#34;m&#34; (tcb)
+		:&#34;rdi&#34;, &#34;rsi&#34;, &#34;rbx&#34;, &#34;rdx&#34;, &#34;r12&#34;, &#34;r13&#34;, &#34;r14&#34;, &#34;r15&#34;
+	);
+
+	if(pid &lt; 0) {
+		errno = -pid; // store errorno incase of error;
+					  // syscalls return errorno * -1;
+					  // negative value indicates an error
+					  // and the value indicates the actual error
+		return -1;
+	}
+
+	return 0;
+}'>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M64 464l224 0c8.8 0 16-7.2 16-16l0-64 48 0 0 64c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 224c0-35.3 28.7-64 64-64l64 0 0 48-64 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16zM224 304l224 0c8.8 0 16-7.2 16-16l0-224c0-8.8-7.2-16-16-16L224 48c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16zm-64-16l0-224c0-35.3 28.7-64 64-64L448 0c35.3 0 64 28.7 64 64l0 224c0 35.3-28.7 64-64 64l-224 0c-35.3 0-64-28.7-64-64z"/></svg>
+        <span>Copy</span>
+      </button>
+      <button class="code-block__collapse">
+        <svg class="code-block__collapse-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg></button>
+    </div>
+  </div>
+  <div class="code-block-expandible code-block-expandible--open">
+    <div class="code-block-wrapper" style="min-height: 0px;">
+      <pre tabindex="0" class="chroma">
+        <code class="language-c" data-lang="c"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#0b0;font-weight:bold">int</span> <span style="color:#00a000">sthread_create</span>(<span style="color:#0b0;font-weight:bold">sthread_t</span><span style="color:#666">*</span> <span style="color:#a2f;font-weight:bold">thread</span>, sthread_attr<span style="color:#666">*</span> thread_attr, <span style="color:#0b0;font-weight:bold">void</span> <span style="color:#666">*</span> (<span style="color:#666">*</span>func)(<span style="color:#0b0;font-weight:bold">void</span> <span style="color:#666">*</span>), <span style="color:#0b0;font-weight:bold">void</span><span style="color:#666">*</span> args) {
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>	<span style="color:#a2f;font-weight:bold">if</span>(thread_attr <span style="color:#666">==</span> <span style="color:#a2f">NULL</span>) {
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>		thread_attr <span style="color:#666">=</span> <span style="color:#666">&amp;</span>default_sthread_attr;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>	}
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>	<span style="color:#0b0;font-weight:bold">void</span><span style="color:#666">*</span> stack_ptr <span style="color:#666">=</span> <span style="color:#00a000">allocate_stack</span>(thread_attr);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>	<span style="color:#666">*</span><span style="color:#a2f;font-weight:bold">thread</span> <span style="color:#666">=</span> stack_ptr;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>	<span style="color:#0b0;font-weight:bold">sthread_t</span> tcb <span style="color:#666">=</span> stack_ptr;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>	tcb<span style="color:#666">-&gt;</span>lock <span style="color:#666">=</span> <span style="color:#666">0</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>	<span style="color:#0b0;font-weight:bold">int</span> clone_flags <span style="color:#666">=</span> (CLONE_VM <span style="color:#666">|</span> CLONE_THREAD <span style="color:#666">|</span> CLONE_SIGHAND <span style="color:#666">|</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>			CLONE_FILES <span style="color:#666">|</span> CLONE_FS <span style="color:#666">|</span> CLONE_PARENT_SETTID <span style="color:#666">|</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span>			CLONE_CHILD_CLEARTID);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span>	<span style="color:#a2f;font-weight:bold">struct</span> clone_args cl_args <span style="color:#666">=</span> {
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span>		.flags <span style="color:#666">=</span> clone_flags,
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span>		.child_tid <span style="color:#666">=</span> (__u64)<span style="color:#666">&amp;</span>(tcb<span style="color:#666">-&gt;</span>tid),
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span>		.pidfd <span style="color:#666">=</span> (__u64)<span style="color:#666">&amp;</span>(tcb<span style="color:#666">-&gt;</span>tid),
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span><span>		.stack <span style="color:#666">=</span> (__u64)(stack_ptr),
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span><span>		.stack_size <span style="color:#666">=</span> thread_attr<span style="color:#666">-&gt;</span>stack_size
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span><span>	};
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span><span>	<span style="color:#0b0;font-weight:bold">pid_t</span> pid;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span><span>	<span style="color:#080;font-style:italic">// These variables are required just so that
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span><span><span style="color:#080;font-style:italic"></span>	<span style="color:#080;font-style:italic">// we won&#39;t need to manually handle setting up
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span><span><span style="color:#080;font-style:italic"></span>	<span style="color:#080;font-style:italic">// the registers in assembly
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span><span><span style="color:#080;font-style:italic"></span>	<span style="color:#080;font-style:italic">// only relevant to the assembly code
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span><span><span style="color:#080;font-style:italic"></span>	<span style="color:#0b0;font-weight:bold">size_t</span> sz <span style="color:#666">=</span> <span style="color:#a2f;font-weight:bold">sizeof</span>(<span style="color:#a2f;font-weight:bold">struct</span> clone_args);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30</span><span>	__u64 clone_args_addr <span style="color:#666">=</span> <span style="color:#666">&amp;</span>cl_args;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31</span><span>	__u64 wrapper_func_addr <span style="color:#666">=</span> <span style="color:#666">&amp;</span>thread_func_wrapper;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33</span><span>	__asm__ <span style="color:#a2f;font-weight:bold">volatile</span>(
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34</span><span>		<span style="color:#b44">&#34;movq %%rax, %%r15</span><span style="color:#b62;font-weight:bold">\n\t</span><span style="color:#b44">&#34;</span> <span style="color:#080;font-style:italic">// save value of rax
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35</span><span><span style="color:#080;font-style:italic"></span>		<span style="color:#080;font-style:italic">// The next 4 values need to be copied into registers because
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36</span><span><span style="color:#080;font-style:italic"></span>		<span style="color:#080;font-style:italic">// they are required by the child thread and the child won&#39;t be able
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37</span><span><span style="color:#080;font-style:italic"></span>		<span style="color:#080;font-style:italic">// to read them from stack variables since the stack would change
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38</span><span><span style="color:#080;font-style:italic"></span>		<span style="color:#b44">&#34;movq %5, %%rbx</span><span style="color:#b62;font-weight:bold">\n\t</span><span style="color:#b44">&#34;</span>    <span style="color:#080;font-style:italic">// start thread func (wrapper over func) need
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39</span><span><span style="color:#080;font-style:italic"></span>		<span style="color:#b44">&#34;movq %2, %%r12</span><span style="color:#b62;font-weight:bold">\n\t</span><span style="color:#b44">&#34;</span>    <span style="color:#080;font-style:italic">// start thread func ARGUMENT 0: func need
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40</span><span><span style="color:#080;font-style:italic"></span>		<span style="color:#b44">&#34;movq %6, %%r13</span><span style="color:#b62;font-weight:bold">\n\t</span><span style="color:#b44">&#34;</span>    <span style="color:#080;font-style:italic">// start thread func ARGUMENT 1: args need
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41</span><span><span style="color:#080;font-style:italic"></span>		<span style="color:#b44">&#34;movq %7, %%r14</span><span style="color:#b62;font-weight:bold">\n\t</span><span style="color:#b44">&#34;</span>	<span style="color:#080;font-style:italic">// start thread func ARGUMENT 2: tcb need
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42</span><span><span style="color:#080;font-style:italic"></span>		<span style="color:#080;font-style:italic">// setting the syscall value
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43</span><span><span style="color:#080;font-style:italic"></span>		<span style="color:#b44">&#34;movq $0, %%rax</span><span style="color:#b62;font-weight:bold">\n\t</span><span style="color:#b44">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44</span><span>		<span style="color:#b44">&#34;mov %1, %%eax</span><span style="color:#b62;font-weight:bold">\n\t</span><span style="color:#b44">&#34;</span>     <span style="color:#080;font-style:italic">// SYSTEM CALL NUMBER : SYS_clone3
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45</span><span><span style="color:#080;font-style:italic"></span>		<span style="color:#b44">&#34;movq %3, %%rdi</span><span style="color:#b62;font-weight:bold">\n\t</span><span style="color:#b44">&#34;</span>    <span style="color:#080;font-style:italic">// zeroth argument to clone3: &amp;cl_args
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46</span><span><span style="color:#080;font-style:italic"></span>		<span style="color:#b44">&#34;movq %4, %%rsi</span><span style="color:#b62;font-weight:bold">\n\t</span><span style="color:#b44">&#34;</span>    <span style="color:#080;font-style:italic">// first argument to clone3: sizeof(cl_args)
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47</span><span><span style="color:#080;font-style:italic"></span>		<span style="color:#b44">&#34;syscall</span><span style="color:#b62;font-weight:bold">\n\t</span><span style="color:#b44">&#34;</span>		<span style="color:#080;font-style:italic">// Linux/amd64 system call */
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48</span><span><span style="color:#080;font-style:italic"></span>		<span style="color:#b44">&#34;testq %%rax,%%rax</span><span style="color:#b62;font-weight:bold">\n\t</span><span style="color:#b44">&#34;</span>	<span style="color:#080;font-style:italic">// check return value */
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49</span><span><span style="color:#080;font-style:italic"></span>		<span style="color:#b44">&#34;jne 1f</span><span style="color:#b62;font-weight:bold">\n\t</span><span style="color:#b44">&#34;</span>		<span style="color:#080;font-style:italic">// jump if parent (if return value is non zero)*/
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50</span><span><span style="color:#080;font-style:italic"></span>		<span style="color:#080;font-style:italic">// call the function in child thread
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51</span><span><span style="color:#080;font-style:italic"></span>		<span style="color:#b44">&#34;movq %%r12, %%rdi</span><span style="color:#b62;font-weight:bold">\n\t</span><span style="color:#b44">&#34;</span>    <span style="color:#080;font-style:italic">// FUNCTION ARGUMENT 0: func
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52</span><span><span style="color:#080;font-style:italic"></span>		<span style="color:#b44">&#34;movq %%r13, %%rsi</span><span style="color:#b62;font-weight:bold">\n\t</span><span style="color:#b44">&#34;</span>    <span style="color:#080;font-style:italic">// FUNCTION ARGUMENT 1: args
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53</span><span><span style="color:#080;font-style:italic"></span>		<span style="color:#b44">&#34;movq %%r14, %%rdx</span><span style="color:#b62;font-weight:bold">\n\t</span><span style="color:#b44">&#34;</span>	<span style="color:#080;font-style:italic">// FUNCTION ARGUMENT 2: tcb
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54</span><span><span style="color:#080;font-style:italic"></span>		<span style="color:#b44">&#34;callq *%%rbx</span><span style="color:#b62;font-weight:bold">\n\t</span><span style="color:#b44">&#34;</span>	<span style="color:#080;font-style:italic">// start subthread function */
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55</span><span><span style="color:#080;font-style:italic"></span>		<span style="color:#b44">&#34;1:</span><span style="color:#b62;font-weight:bold">\n\t</span><span style="color:#b44">&#34;</span> <span style="color:#080;font-style:italic">// parent thread will jump to here
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56</span><span><span style="color:#080;font-style:italic"></span>		<span style="color:#b44">&#34;movq %%rax, %0</span><span style="color:#b62;font-weight:bold">\n\t</span><span style="color:#b44">&#34;</span> <span style="color:#080;font-style:italic">//copy syscall return to pid in parent thread
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57</span><span><span style="color:#080;font-style:italic"></span>		<span style="color:#b44">&#34;movq %%r15, %%rax</span><span style="color:#b62;font-weight:bold">\t</span><span style="color:#b44">&#34;</span> <span style="color:#080;font-style:italic">//restore rax value in in parent thread
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58</span><span><span style="color:#080;font-style:italic"></span>		<span style="color:#666">:</span><span style="color:#b44">&#34;=m&#34;</span> (pid)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59</span><span>		<span style="color:#666">:</span><span style="color:#b44">&#34;i&#34;</span> (SYS_clone3),
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60</span><span>		<span style="color:#b44">&#34;m&#34;</span> (func),
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61</span><span>		<span style="color:#b44">&#34;m&#34;</span> (clone_args_addr),
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62</span><span>		<span style="color:#b44">&#34;m&#34;</span> (sz),
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63</span><span>		<span style="color:#b44">&#34;m&#34;</span> (wrapper_func_addr),
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64</span><span>		<span style="color:#b44">&#34;m&#34;</span> (args),
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65</span><span>		<span style="color:#b44">&#34;m&#34;</span> (tcb)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">66</span><span>		<span style="color:#666">:</span><span style="color:#b44">&#34;rdi&#34;</span>, <span style="color:#b44">&#34;rsi&#34;</span>, <span style="color:#b44">&#34;rbx&#34;</span>, <span style="color:#b44">&#34;rdx&#34;</span>, <span style="color:#b44">&#34;r12&#34;</span>, <span style="color:#b44">&#34;r13&#34;</span>, <span style="color:#b44">&#34;r14&#34;</span>, <span style="color:#b44">&#34;r15&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">67</span><span>	);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">68</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">69</span><span>	<span style="color:#a2f;font-weight:bold">if</span>(pid <span style="color:#666">&lt;</span> <span style="color:#666">0</span>) {
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">70</span><span>		errno <span style="color:#666">=</span> <span style="color:#666">-</span>pid; <span style="color:#080;font-style:italic">// store errorno incase of error;
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">71</span><span><span style="color:#080;font-style:italic"></span>					  <span style="color:#080;font-style:italic">// syscalls return errorno * -1;
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">72</span><span><span style="color:#080;font-style:italic"></span>					  <span style="color:#080;font-style:italic">// negative value indicates an error
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">73</span><span><span style="color:#080;font-style:italic"></span>					  <span style="color:#080;font-style:italic">// and the value indicates the actual error
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">74</span><span><span style="color:#080;font-style:italic"></span>		<span style="color:#a2f;font-weight:bold">return</span> <span style="color:#666">-</span><span style="color:#666">1</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">75</span><span>	}
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">76</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">77</span><span>	<span style="color:#a2f;font-weight:bold">return</span> <span style="color:#666">0</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">78</span><span>}</span></span></code>
+        <code class="language-c" data-lang="c"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 1</span><span><span style="color:#e5c07b">int</span> <span style="color:#00b1f7">sthread_create</span><span style="color:#abb2bf">(</span><span style="color:#e5c07b">sthread_t</span><span style="color:#54b1c7">*</span> <span style="color:#76a9f9">thread</span><span style="color:#abb2bf">,</span> <span style="color:#aa89ea">sthread_attr</span><span style="color:#54b1c7">*</span> <span style="color:#aa89ea">thread_attr</span><span style="color:#abb2bf">,</span> <span style="color:#e5c07b">void</span> <span style="color:#54b1c7">*</span> <span style="color:#abb2bf">(</span><span style="color:#54b1c7">*</span><span style="color:#aa89ea">func</span><span style="color:#abb2bf">)(</span><span style="color:#e5c07b">void</span> <span style="color:#54b1c7">*</span><span style="color:#abb2bf">),</span> <span style="color:#e5c07b">void</span><span style="color:#54b1c7">*</span> <span style="color:#aa89ea">args</span><span style="color:#abb2bf">)</span> <span style="color:#abb2bf">{</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 2</span><span>	<span style="color:#76a9f9">if</span><span style="color:#abb2bf">(</span><span style="color:#aa89ea">thread_attr</span> <span style="color:#54b1c7">==</span> <span style="color:#e5c07b">NULL</span><span style="color:#abb2bf">)</span> <span style="color:#abb2bf">{</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 3</span><span>		<span style="color:#aa89ea">thread_attr</span> <span style="color:#54b1c7">=</span> <span style="color:#54b1c7">&amp;</span><span style="color:#aa89ea">default_sthread_attr</span><span style="color:#abb2bf">;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 4</span><span>	<span style="color:#abb2bf">}</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 5</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 6</span><span>	<span style="color:#e5c07b">void</span><span style="color:#54b1c7">*</span> <span style="color:#aa89ea">stack_ptr</span> <span style="color:#54b1c7">=</span> <span style="color:#00b1f7">allocate_stack</span><span style="color:#abb2bf">(</span><span style="color:#aa89ea">thread_attr</span><span style="color:#abb2bf">);</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 7</span><span>	<span style="color:#54b1c7">*</span><span style="color:#76a9f9">thread</span> <span style="color:#54b1c7">=</span> <span style="color:#aa89ea">stack_ptr</span><span style="color:#abb2bf">;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 8</span><span>	<span style="color:#e5c07b">sthread_t</span> <span style="color:#aa89ea">tcb</span> <span style="color:#54b1c7">=</span> <span style="color:#aa89ea">stack_ptr</span><span style="color:#abb2bf">;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 9</span><span>	<span style="color:#aa89ea">tcb</span><span style="color:#54b1c7">-&gt;</span><span style="color:#aa89ea">lock</span> <span style="color:#54b1c7">=</span> <span style="color:#d19a66">0</span><span style="color:#abb2bf">;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">10</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">11</span><span>	<span style="color:#e5c07b">int</span> <span style="color:#aa89ea">clone_flags</span> <span style="color:#54b1c7">=</span> <span style="color:#abb2bf">(</span><span style="color:#aa89ea">CLONE_VM</span> <span style="color:#54b1c7">|</span> <span style="color:#aa89ea">CLONE_THREAD</span> <span style="color:#54b1c7">|</span> <span style="color:#aa89ea">CLONE_SIGHAND</span> <span style="color:#54b1c7">|</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">12</span><span>			<span style="color:#aa89ea">CLONE_FILES</span> <span style="color:#54b1c7">|</span> <span style="color:#aa89ea">CLONE_FS</span> <span style="color:#54b1c7">|</span> <span style="color:#aa89ea">CLONE_PARENT_SETTID</span> <span style="color:#54b1c7">|</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">13</span><span>			<span style="color:#aa89ea">CLONE_CHILD_CLEARTID</span><span style="color:#abb2bf">);</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">14</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">15</span><span>	<span style="color:#76a9f9">struct</span> <span style="color:#aa89ea">clone_args</span> <span style="color:#aa89ea">cl_args</span> <span style="color:#54b1c7">=</span> <span style="color:#abb2bf">{</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">16</span><span>		<span style="color:#abb2bf">.</span><span style="color:#aa89ea">flags</span> <span style="color:#54b1c7">=</span> <span style="color:#aa89ea">clone_flags</span><span style="color:#abb2bf">,</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">17</span><span>		<span style="color:#abb2bf">.</span><span style="color:#aa89ea">child_tid</span> <span style="color:#54b1c7">=</span> <span style="color:#abb2bf">(</span><span style="color:#aa89ea">__u64</span><span style="color:#abb2bf">)</span><span style="color:#54b1c7">&amp;</span><span style="color:#abb2bf">(</span><span style="color:#aa89ea">tcb</span><span style="color:#54b1c7">-&gt;</span><span style="color:#aa89ea">tid</span><span style="color:#abb2bf">),</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">18</span><span>		<span style="color:#abb2bf">.</span><span style="color:#aa89ea">pidfd</span> <span style="color:#54b1c7">=</span> <span style="color:#abb2bf">(</span><span style="color:#aa89ea">__u64</span><span style="color:#abb2bf">)</span><span style="color:#54b1c7">&amp;</span><span style="color:#abb2bf">(</span><span style="color:#aa89ea">tcb</span><span style="color:#54b1c7">-&gt;</span><span style="color:#aa89ea">tid</span><span style="color:#abb2bf">),</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">19</span><span>		<span style="color:#abb2bf">.</span><span style="color:#aa89ea">stack</span> <span style="color:#54b1c7">=</span> <span style="color:#abb2bf">(</span><span style="color:#aa89ea">__u64</span><span style="color:#abb2bf">)(</span><span style="color:#aa89ea">stack_ptr</span><span style="color:#abb2bf">),</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">20</span><span>		<span style="color:#abb2bf">.</span><span style="color:#aa89ea">stack_size</span> <span style="color:#54b1c7">=</span> <span style="color:#aa89ea">thread_attr</span><span style="color:#54b1c7">-&gt;</span><span style="color:#aa89ea">stack_size</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">21</span><span>	<span style="color:#abb2bf">};</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">22</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">23</span><span>	<span style="color:#e5c07b">pid_t</span> <span style="color:#aa89ea">pid</span><span style="color:#abb2bf">;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">24</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">25</span><span>	<span style="color:#8a93a5;font-style:italic">// These variables are required just so that
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">26</span><span><span style="color:#8a93a5;font-style:italic"></span>	<span style="color:#8a93a5;font-style:italic">// we won&#39;t need to manually handle setting up
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">27</span><span><span style="color:#8a93a5;font-style:italic"></span>	<span style="color:#8a93a5;font-style:italic">// the registers in assembly
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">28</span><span><span style="color:#8a93a5;font-style:italic"></span>	<span style="color:#8a93a5;font-style:italic">// only relevant to the assembly code
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">29</span><span><span style="color:#8a93a5;font-style:italic"></span>	<span style="color:#e5c07b">size_t</span> <span style="color:#aa89ea">sz</span> <span style="color:#54b1c7">=</span> <span style="color:#76a9f9">sizeof</span><span style="color:#abb2bf">(</span><span style="color:#76a9f9">struct</span> <span style="color:#aa89ea">clone_args</span><span style="color:#abb2bf">);</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">30</span><span>	<span style="color:#aa89ea">__u64</span> <span style="color:#aa89ea">clone_args_addr</span> <span style="color:#54b1c7">=</span> <span style="color:#54b1c7">&amp;</span><span style="color:#aa89ea">cl_args</span><span style="color:#abb2bf">;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">31</span><span>	<span style="color:#aa89ea">__u64</span> <span style="color:#aa89ea">wrapper_func_addr</span> <span style="color:#54b1c7">=</span> <span style="color:#54b1c7">&amp;</span><span style="color:#aa89ea">thread_func_wrapper</span><span style="color:#abb2bf">;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">32</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">33</span><span>	<span style="color:#aa89ea">__asm__</span> <span style="color:#76a9f9">volatile</span><span style="color:#abb2bf">(</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">34</span><span>		<span style="color:#98c379">&#34;movq %%rax, %%r15</span><span style="color:#d26464;font-weight:bold">\n\t</span><span style="color:#98c379">&#34;</span> <span style="color:#8a93a5;font-style:italic">// save value of rax
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">35</span><span><span style="color:#8a93a5;font-style:italic"></span>		<span style="color:#8a93a5;font-style:italic">// The next 4 values need to be copied into registers because
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">36</span><span><span style="color:#8a93a5;font-style:italic"></span>		<span style="color:#8a93a5;font-style:italic">// they are required by the child thread and the child won&#39;t be able
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">37</span><span><span style="color:#8a93a5;font-style:italic"></span>		<span style="color:#8a93a5;font-style:italic">// to read them from stack variables since the stack would change
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">38</span><span><span style="color:#8a93a5;font-style:italic"></span>		<span style="color:#98c379">&#34;movq %5, %%rbx</span><span style="color:#d26464;font-weight:bold">\n\t</span><span style="color:#98c379">&#34;</span>    <span style="color:#8a93a5;font-style:italic">// start thread func (wrapper over func) need
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">39</span><span><span style="color:#8a93a5;font-style:italic"></span>		<span style="color:#98c379">&#34;movq %2, %%r12</span><span style="color:#d26464;font-weight:bold">\n\t</span><span style="color:#98c379">&#34;</span>    <span style="color:#8a93a5;font-style:italic">// start thread func ARGUMENT 0: func need
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">40</span><span><span style="color:#8a93a5;font-style:italic"></span>		<span style="color:#98c379">&#34;movq %6, %%r13</span><span style="color:#d26464;font-weight:bold">\n\t</span><span style="color:#98c379">&#34;</span>    <span style="color:#8a93a5;font-style:italic">// start thread func ARGUMENT 1: args need
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">41</span><span><span style="color:#8a93a5;font-style:italic"></span>		<span style="color:#98c379">&#34;movq %7, %%r14</span><span style="color:#d26464;font-weight:bold">\n\t</span><span style="color:#98c379">&#34;</span>	<span style="color:#8a93a5;font-style:italic">// start thread func ARGUMENT 2: tcb need
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">42</span><span><span style="color:#8a93a5;font-style:italic"></span>		<span style="color:#8a93a5;font-style:italic">// setting the syscall value
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">43</span><span><span style="color:#8a93a5;font-style:italic"></span>		<span style="color:#98c379">&#34;movq $0, %%rax</span><span style="color:#d26464;font-weight:bold">\n\t</span><span style="color:#98c379">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">44</span><span>		<span style="color:#98c379">&#34;mov %1, %%eax</span><span style="color:#d26464;font-weight:bold">\n\t</span><span style="color:#98c379">&#34;</span>     <span style="color:#8a93a5;font-style:italic">// SYSTEM CALL NUMBER : SYS_clone3
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">45</span><span><span style="color:#8a93a5;font-style:italic"></span>		<span style="color:#98c379">&#34;movq %3, %%rdi</span><span style="color:#d26464;font-weight:bold">\n\t</span><span style="color:#98c379">&#34;</span>    <span style="color:#8a93a5;font-style:italic">// zeroth argument to clone3: &amp;cl_args
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">46</span><span><span style="color:#8a93a5;font-style:italic"></span>		<span style="color:#98c379">&#34;movq %4, %%rsi</span><span style="color:#d26464;font-weight:bold">\n\t</span><span style="color:#98c379">&#34;</span>    <span style="color:#8a93a5;font-style:italic">// first argument to clone3: sizeof(cl_args)
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">47</span><span><span style="color:#8a93a5;font-style:italic"></span>		<span style="color:#98c379">&#34;syscall</span><span style="color:#d26464;font-weight:bold">\n\t</span><span style="color:#98c379">&#34;</span>		<span style="color:#8a93a5;font-style:italic">// Linux/amd64 system call */
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">48</span><span><span style="color:#8a93a5;font-style:italic"></span>		<span style="color:#98c379">&#34;testq %%rax,%%rax</span><span style="color:#d26464;font-weight:bold">\n\t</span><span style="color:#98c379">&#34;</span>	<span style="color:#8a93a5;font-style:italic">// check return value */
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">49</span><span><span style="color:#8a93a5;font-style:italic"></span>		<span style="color:#98c379">&#34;jne 1f</span><span style="color:#d26464;font-weight:bold">\n\t</span><span style="color:#98c379">&#34;</span>		<span style="color:#8a93a5;font-style:italic">// jump if parent (if return value is non zero)*/
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">50</span><span><span style="color:#8a93a5;font-style:italic"></span>		<span style="color:#8a93a5;font-style:italic">// call the function in child thread
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">51</span><span><span style="color:#8a93a5;font-style:italic"></span>		<span style="color:#98c379">&#34;movq %%r12, %%rdi</span><span style="color:#d26464;font-weight:bold">\n\t</span><span style="color:#98c379">&#34;</span>    <span style="color:#8a93a5;font-style:italic">// FUNCTION ARGUMENT 0: func
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">52</span><span><span style="color:#8a93a5;font-style:italic"></span>		<span style="color:#98c379">&#34;movq %%r13, %%rsi</span><span style="color:#d26464;font-weight:bold">\n\t</span><span style="color:#98c379">&#34;</span>    <span style="color:#8a93a5;font-style:italic">// FUNCTION ARGUMENT 1: args
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">53</span><span><span style="color:#8a93a5;font-style:italic"></span>		<span style="color:#98c379">&#34;movq %%r14, %%rdx</span><span style="color:#d26464;font-weight:bold">\n\t</span><span style="color:#98c379">&#34;</span>	<span style="color:#8a93a5;font-style:italic">// FUNCTION ARGUMENT 2: tcb
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">54</span><span><span style="color:#8a93a5;font-style:italic"></span>		<span style="color:#98c379">&#34;callq *%%rbx</span><span style="color:#d26464;font-weight:bold">\n\t</span><span style="color:#98c379">&#34;</span>	<span style="color:#8a93a5;font-style:italic">// start subthread function */
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">55</span><span><span style="color:#8a93a5;font-style:italic"></span>		<span style="color:#98c379">&#34;1:</span><span style="color:#d26464;font-weight:bold">\n\t</span><span style="color:#98c379">&#34;</span> <span style="color:#8a93a5;font-style:italic">// parent thread will jump to here
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">56</span><span><span style="color:#8a93a5;font-style:italic"></span>		<span style="color:#98c379">&#34;movq %%rax, %0</span><span style="color:#d26464;font-weight:bold">\n\t</span><span style="color:#98c379">&#34;</span> <span style="color:#8a93a5;font-style:italic">//copy syscall return to pid in parent thread
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">57</span><span><span style="color:#8a93a5;font-style:italic"></span>		<span style="color:#98c379">&#34;movq %%r15, %%rax</span><span style="color:#d26464;font-weight:bold">\t</span><span style="color:#98c379">&#34;</span> <span style="color:#8a93a5;font-style:italic">//restore rax value in in parent thread
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">58</span><span><span style="color:#8a93a5;font-style:italic"></span>		<span style="color:#54b1c7">:</span><span style="color:#98c379">&#34;=m&#34;</span> <span style="color:#abb2bf">(</span><span style="color:#aa89ea">pid</span><span style="color:#abb2bf">)</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">59</span><span>		<span style="color:#54b1c7">:</span><span style="color:#98c379">&#34;i&#34;</span> <span style="color:#abb2bf">(</span><span style="color:#aa89ea">SYS_clone3</span><span style="color:#abb2bf">),</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">60</span><span>		<span style="color:#98c379">&#34;m&#34;</span> <span style="color:#abb2bf">(</span><span style="color:#aa89ea">func</span><span style="color:#abb2bf">),</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">61</span><span>		<span style="color:#98c379">&#34;m&#34;</span> <span style="color:#abb2bf">(</span><span style="color:#aa89ea">clone_args_addr</span><span style="color:#abb2bf">),</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">62</span><span>		<span style="color:#98c379">&#34;m&#34;</span> <span style="color:#abb2bf">(</span><span style="color:#aa89ea">sz</span><span style="color:#abb2bf">),</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">63</span><span>		<span style="color:#98c379">&#34;m&#34;</span> <span style="color:#abb2bf">(</span><span style="color:#aa89ea">wrapper_func_addr</span><span style="color:#abb2bf">),</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">64</span><span>		<span style="color:#98c379">&#34;m&#34;</span> <span style="color:#abb2bf">(</span><span style="color:#aa89ea">args</span><span style="color:#abb2bf">),</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">65</span><span>		<span style="color:#98c379">&#34;m&#34;</span> <span style="color:#abb2bf">(</span><span style="color:#aa89ea">tcb</span><span style="color:#abb2bf">)</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">66</span><span>		<span style="color:#54b1c7">:</span><span style="color:#98c379">&#34;rdi&#34;</span><span style="color:#abb2bf">,</span> <span style="color:#98c379">&#34;rsi&#34;</span><span style="color:#abb2bf">,</span> <span style="color:#98c379">&#34;rbx&#34;</span><span style="color:#abb2bf">,</span> <span style="color:#98c379">&#34;rdx&#34;</span><span style="color:#abb2bf">,</span> <span style="color:#98c379">&#34;r12&#34;</span><span style="color:#abb2bf">,</span> <span style="color:#98c379">&#34;r13&#34;</span><span style="color:#abb2bf">,</span> <span style="color:#98c379">&#34;r14&#34;</span><span style="color:#abb2bf">,</span> <span style="color:#98c379">&#34;r15&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">67</span><span>	<span style="color:#abb2bf">);</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">68</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">69</span><span>	<span style="color:#76a9f9">if</span><span style="color:#abb2bf">(</span><span style="color:#aa89ea">pid</span> <span style="color:#54b1c7">&lt;</span> <span style="color:#d19a66">0</span><span style="color:#abb2bf">)</span> <span style="color:#abb2bf">{</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">70</span><span>		<span style="color:#aa89ea">errno</span> <span style="color:#54b1c7">=</span> <span style="color:#54b1c7">-</span><span style="color:#aa89ea">pid</span><span style="color:#abb2bf">;</span> <span style="color:#8a93a5;font-style:italic">// store errorno incase of error;
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">71</span><span><span style="color:#8a93a5;font-style:italic"></span>					  <span style="color:#8a93a5;font-style:italic">// syscalls return errorno * -1;
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">72</span><span><span style="color:#8a93a5;font-style:italic"></span>					  <span style="color:#8a93a5;font-style:italic">// negative value indicates an error
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">73</span><span><span style="color:#8a93a5;font-style:italic"></span>					  <span style="color:#8a93a5;font-style:italic">// and the value indicates the actual error
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">74</span><span><span style="color:#8a93a5;font-style:italic"></span>		<span style="color:#76a9f9">return</span> <span style="color:#54b1c7">-</span><span style="color:#d19a66">1</span><span style="color:#abb2bf">;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">75</span><span>	<span style="color:#abb2bf">}</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">76</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">77</span><span>	<span style="color:#76a9f9">return</span> <span style="color:#d19a66">0</span><span style="color:#abb2bf">;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">78</span><span><span style="color:#abb2bf">}</span></span></span></code>
+      </pre>
+    </div>
+  </div>
+</figure>
+<p>Note that there is another subtlety in starting the thread in the child function. Since, the child thread does not have access to the parent process stack frame, the child process can not read the values <code>func</code>, <code>wrapper_func_addr</code>, <code>args</code> and <code>tcb</code> from stack and therefore we need to copy those values into register before calling the <code>clone3</code> syscall. Child process resulting from call has the same values set in all the registers as it&rsquo;s parents in all cases except for the stack pointer and the <code>rax</code> register. So, copying them to some registers other than those will let us access them in the child process.</p>
+<h2 id="allocating-the-stack">Allocating The Stack</h2>
+<p>For our <code>sthread_create</code> function to work, we must be able to allocate a new stack for our new thread. There are two main data structures in a process regarding address spaces. The page table, which we already introduced and memory region list, which keeps track of which ranges of memory addresses are valid in our process and their purposes.</p>
+<p>In Linux, the whole address space is not considered valid by default. When a loader loads a program, it loads the code sets up the static region, stack and heap. But the rest of the regions are not valid. We must update the memory region list when we want to use a certain memory region for a certain purpose. Furthermore, we need to find contigious memory addresses of said size in the physical memory and update our page table as well. Both these tasks are handled by the <a href="https://man7.org/linux/man-pages/man2/mmap.2.html"><code>mmap</code></a> syscall. We can allocate our stack using the <code>mmap</code> function as follows:</p>
+<figure class="highlight">
+  <div class="code-block-header">
+    <div class="title">
+      <tt>stack.c</tt>
+    </div>
+    <div class="code-block-header__button-tray">
+      <button class="code-block__copy" data-code='void* allocate_stack(sthread_attr* thread_attr) {
+	if(thread_attr == NULL) {
+		thread_attr = &amp;default_sthread_attr;
+	}
+
+	if(thread_attr-&gt;stack_ptr) {
+		return thread_attr-&gt;stack_ptr;
+	}
+
+	void* stack_ptr = mmap(NULL, thread_attr-&gt;stack_size, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE| MAP_STACK, 0, 0);
+	if(stack_ptr == MAP_FAILED) {
+		return NULL;
+	}
+
+	thread_attr-&gt;stack_ptr = stack_ptr;
+	return stack_ptr;
+}'>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M64 464l224 0c8.8 0 16-7.2 16-16l0-64 48 0 0 64c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 224c0-35.3 28.7-64 64-64l64 0 0 48-64 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16zM224 304l224 0c8.8 0 16-7.2 16-16l0-224c0-8.8-7.2-16-16-16L224 48c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16zm-64-16l0-224c0-35.3 28.7-64 64-64L448 0c35.3 0 64 28.7 64 64l0 224c0 35.3-28.7 64-64 64l-224 0c-35.3 0-64-28.7-64-64z"/></svg>
+        <span>Copy</span>
+      </button>
+      <button class="code-block__collapse">
+        <svg class="code-block__collapse-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg></button>
+    </div>
+  </div>
+  <div class="code-block-expandible code-block-expandible--open">
+    <div class="code-block-wrapper" style="min-height: 0px;">
+      <pre tabindex="0" class="chroma">
+        <code class="language-c" data-lang="c"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#0b0;font-weight:bold">void</span><span style="color:#666">*</span> <span style="color:#00a000">allocate_stack</span>(sthread_attr<span style="color:#666">*</span> thread_attr) {
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>	<span style="color:#a2f;font-weight:bold">if</span>(thread_attr <span style="color:#666">==</span> <span style="color:#a2f">NULL</span>) {
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>		thread_attr <span style="color:#666">=</span> <span style="color:#666">&amp;</span>default_sthread_attr;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>	}
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>	<span style="color:#a2f;font-weight:bold">if</span>(thread_attr<span style="color:#666">-&gt;</span>stack_ptr) {
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>		<span style="color:#a2f;font-weight:bold">return</span> thread_attr<span style="color:#666">-&gt;</span>stack_ptr;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>	}
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>	<span style="color:#0b0;font-weight:bold">void</span><span style="color:#666">*</span> stack_ptr <span style="color:#666">=</span> <span style="color:#00a000">mmap</span>(<span style="color:#a2f">NULL</span>, thread_attr<span style="color:#666">-&gt;</span>stack_size, PROT_READ <span style="color:#666">|</span> PROT_WRITE, MAP_ANON <span style="color:#666">|</span> MAP_PRIVATE<span style="color:#666">|</span> MAP_STACK, <span style="color:#666">0</span>, <span style="color:#666">0</span>);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>	<span style="color:#a2f;font-weight:bold">if</span>(stack_ptr <span style="color:#666">==</span> MAP_FAILED) {
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>		<span style="color:#a2f;font-weight:bold">return</span> <span style="color:#a2f">NULL</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span>	}
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span>	thread_attr<span style="color:#666">-&gt;</span>stack_ptr <span style="color:#666">=</span> stack_ptr;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span>	<span style="color:#a2f;font-weight:bold">return</span> stack_ptr;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span>}</span></span></code>
+        <code class="language-c" data-lang="c"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 1</span><span><span style="color:#e5c07b">void</span><span style="color:#54b1c7">*</span> <span style="color:#00b1f7">allocate_stack</span><span style="color:#abb2bf">(</span><span style="color:#aa89ea">sthread_attr</span><span style="color:#54b1c7">*</span> <span style="color:#aa89ea">thread_attr</span><span style="color:#abb2bf">)</span> <span style="color:#abb2bf">{</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 2</span><span>	<span style="color:#76a9f9">if</span><span style="color:#abb2bf">(</span><span style="color:#aa89ea">thread_attr</span> <span style="color:#54b1c7">==</span> <span style="color:#e5c07b">NULL</span><span style="color:#abb2bf">)</span> <span style="color:#abb2bf">{</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 3</span><span>		<span style="color:#aa89ea">thread_attr</span> <span style="color:#54b1c7">=</span> <span style="color:#54b1c7">&amp;</span><span style="color:#aa89ea">default_sthread_attr</span><span style="color:#abb2bf">;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 4</span><span>	<span style="color:#abb2bf">}</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 5</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 6</span><span>	<span style="color:#76a9f9">if</span><span style="color:#abb2bf">(</span><span style="color:#aa89ea">thread_attr</span><span style="color:#54b1c7">-&gt;</span><span style="color:#aa89ea">stack_ptr</span><span style="color:#abb2bf">)</span> <span style="color:#abb2bf">{</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 7</span><span>		<span style="color:#76a9f9">return</span> <span style="color:#aa89ea">thread_attr</span><span style="color:#54b1c7">-&gt;</span><span style="color:#aa89ea">stack_ptr</span><span style="color:#abb2bf">;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 8</span><span>	<span style="color:#abb2bf">}</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 9</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">10</span><span>	<span style="color:#e5c07b">void</span><span style="color:#54b1c7">*</span> <span style="color:#aa89ea">stack_ptr</span> <span style="color:#54b1c7">=</span> <span style="color:#00b1f7">mmap</span><span style="color:#abb2bf">(</span><span style="color:#e5c07b">NULL</span><span style="color:#abb2bf">,</span> <span style="color:#aa89ea">thread_attr</span><span style="color:#54b1c7">-&gt;</span><span style="color:#aa89ea">stack_size</span><span style="color:#abb2bf">,</span> <span style="color:#aa89ea">PROT_READ</span> <span style="color:#54b1c7">|</span> <span style="color:#aa89ea">PROT_WRITE</span><span style="color:#abb2bf">,</span> <span style="color:#aa89ea">MAP_ANON</span> <span style="color:#54b1c7">|</span> <span style="color:#aa89ea">MAP_PRIVATE</span><span style="color:#54b1c7">|</span> <span style="color:#aa89ea">MAP_STACK</span><span style="color:#abb2bf">,</span> <span style="color:#d19a66">0</span><span style="color:#abb2bf">,</span> <span style="color:#d19a66">0</span><span style="color:#abb2bf">);</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">11</span><span>	<span style="color:#76a9f9">if</span><span style="color:#abb2bf">(</span><span style="color:#aa89ea">stack_ptr</span> <span style="color:#54b1c7">==</span> <span style="color:#aa89ea">MAP_FAILED</span><span style="color:#abb2bf">)</span> <span style="color:#abb2bf">{</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">12</span><span>		<span style="color:#76a9f9">return</span> <span style="color:#e5c07b">NULL</span><span style="color:#abb2bf">;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">13</span><span>	<span style="color:#abb2bf">}</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">14</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">15</span><span>	<span style="color:#aa89ea">thread_attr</span><span style="color:#54b1c7">-&gt;</span><span style="color:#aa89ea">stack_ptr</span> <span style="color:#54b1c7">=</span> <span style="color:#aa89ea">stack_ptr</span><span style="color:#abb2bf">;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">16</span><span>	<span style="color:#76a9f9">return</span> <span style="color:#aa89ea">stack_ptr</span><span style="color:#abb2bf">;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">17</span><span><span style="color:#abb2bf">}</span></span></span></code>
+      </pre>
+    </div>
+  </div>
+</figure>
+<h2 id="joining-on-threads">Joining On Threads</h2>
+<p>We will use <a href="https://en.wikipedia.org/wiki/Futex">futex</a> for joining. Futex is short for fast userspace mutex. Futex consists of a kernel-space wait queue and an userspace integer. The idea is wait a thread on the queue or wake threads from a queue based on the value of the integer. The signature of the futex syscall is as follows:</p>
+<figure class="highlight">
+  <div class="code-block-header">
+    <div class="title">
+      <tt></tt>
+    </div>
+    <div class="code-block-header__button-tray">
+      <button class="code-block__copy" data-code='long syscall(SYS_futex, uint32_t *uaddr, int futex_op, uint32_t val,
+                    const struct timespec *timeout,   /* or: uint32_t val2 */
+                    uint32_t *uaddr2, uint32_t val3);'>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M64 464l224 0c8.8 0 16-7.2 16-16l0-64 48 0 0 64c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 224c0-35.3 28.7-64 64-64l64 0 0 48-64 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16zM224 304l224 0c8.8 0 16-7.2 16-16l0-224c0-8.8-7.2-16-16-16L224 48c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16zm-64-16l0-224c0-35.3 28.7-64 64-64L448 0c35.3 0 64 28.7 64 64l0 224c0 35.3-28.7 64-64 64l-224 0c-35.3 0-64-28.7-64-64z"/></svg>
+        <span>Copy</span>
+      </button>
+      <button class="code-block__collapse">
+        <svg class="code-block__collapse-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg></button>
+    </div>
+  </div>
+  <div class="code-block-expandible code-block-expandible--open">
+    <div class="code-block-wrapper" style="min-height: 0px;">
+      <pre tabindex="0" class="chroma">
+        <code class="language-c" data-lang="c"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span><span style="color:#0b0;font-weight:bold">long</span> <span style="color:#00a000">syscall</span>(SYS_futex, <span style="color:#0b0;font-weight:bold">uint32_t</span> <span style="color:#666">*</span>uaddr, <span style="color:#0b0;font-weight:bold">int</span> futex_op, <span style="color:#0b0;font-weight:bold">uint32_t</span> val,
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span>                    <span style="color:#a2f;font-weight:bold">const</span> <span style="color:#a2f;font-weight:bold">struct</span> timespec <span style="color:#666">*</span>timeout,   <span style="color:#080;font-style:italic">/* or: uint32_t val2 */</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span>                    <span style="color:#0b0;font-weight:bold">uint32_t</span> <span style="color:#666">*</span>uaddr2, <span style="color:#0b0;font-weight:bold">uint32_t</span> val3);</span></span></code>
+        <code class="language-c" data-lang="c"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">1</span><span><span style="color:#e5c07b">long</span> <span style="color:#00b1f7">syscall</span><span style="color:#abb2bf">(</span><span style="color:#aa89ea">SYS_futex</span><span style="color:#abb2bf">,</span> <span style="color:#e5c07b">uint32_t</span> <span style="color:#54b1c7">*</span><span style="color:#aa89ea">uaddr</span><span style="color:#abb2bf">,</span> <span style="color:#e5c07b">int</span> <span style="color:#aa89ea">futex_op</span><span style="color:#abb2bf">,</span> <span style="color:#e5c07b">uint32_t</span> <span style="color:#aa89ea">val</span><span style="color:#abb2bf">,</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">2</span><span>                    <span style="color:#76a9f9">const</span> <span style="color:#76a9f9">struct</span> <span style="color:#aa89ea">timespec</span> <span style="color:#54b1c7">*</span><span style="color:#aa89ea">timeout</span><span style="color:#abb2bf">,</span>   <span style="color:#8a93a5;font-style:italic">/* or: uint32_t val2 */</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">3</span><span>                    <span style="color:#e5c07b">uint32_t</span> <span style="color:#54b1c7">*</span><span style="color:#aa89ea">uaddr2</span><span style="color:#abb2bf">,</span> <span style="color:#e5c07b">uint32_t</span> <span style="color:#aa89ea">val3</span><span style="color:#abb2bf">);</span></span></span></code>
+      </pre>
+    </div>
+  </div>
+</figure>
+<p>Futex syscall allows us to perform many operations on futex words (the userspace integer that futex uses). But we are interested with only two:</p>
+<ul>
+<li><code>FUTEX_WAIT</code> : If the value pointed by <code>uaddr</code> equals to <code>val</code>, the thread puts itself in the queu and wait until it is woken up. If the value pointed by <code>uaddr</code> does not equal to <code>val</code>, the thread does not block. We may specify a timeout for our wait. But when specified to <code>NULL</code> it waits indefinitely until someone wakes it up using a <code>FUTEX_WAKE</code> operation.</li>
+<li><code>FUTEX_WAKE</code>: Wakes up <code>min(val, length(wait_queue))</code> number of threads in the wait queue associated with <code>uaddr</code>. Usually val is set to $1$ or <code>INT_MAX</code> to either wake up one or all threads. But it can be any integer.</li>
+</ul>
+<p>To implement thread join, we store a futex in our <code>sthread</code> struct named <code>lock</code>. This value is initilized as zero and only updated when our thread terminates executing. The in our <code>thread_done</code> function we update the value to one.</p>
+<p>When we want to join on our thread we check if the value of lock is one. If it is not, <code>sthread_join</code> blocks until it is woken up by the <code>thread_done</code> function in the other thread. If the other thread updated the value of the lock before the thread calling <code>sthread_join</code> called <code>FUTEX_WAIT</code>, no blocking will happen as expected.</p>
+<figure class="highlight">
+  <div class="code-block-header">
+    <div class="title">
+      <tt>sthread_join.c</tt>
+    </div>
+    <div class="code-block-header__button-tray">
+      <button class="code-block__copy" data-code='#include &lt;sthread.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;sys/syscall.h&gt;
+#include &lt;linux/futex.h&gt;
+#include &lt;linux/sched.h&gt;
+
+#include &#34;../stack/stack.h&#34;
+
+int sthread_join(sthread_t thread, void** ret_val) {
+	syscall(SYS_futex, &amp;thread-&gt;lock, FUTEX_WAIT, 0, NULL, NULL, 0);
+	if(ret_val) *ret_val = thread-&gt;result;
+	deallocate_stack(&amp;thread-&gt;thread_attributes); //multiple joins on same thread will break things
+	return 0;
+}'>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M64 464l224 0c8.8 0 16-7.2 16-16l0-64 48 0 0 64c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 224c0-35.3 28.7-64 64-64l64 0 0 48-64 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16zM224 304l224 0c8.8 0 16-7.2 16-16l0-224c0-8.8-7.2-16-16-16L224 48c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16zm-64-16l0-224c0-35.3 28.7-64 64-64L448 0c35.3 0 64 28.7 64 64l0 224c0 35.3-28.7 64-64 64l-224 0c-35.3 0-64-28.7-64-64z"/></svg>
+        <span>Copy</span>
+      </button>
+      <button class="code-block__collapse">
+        <svg class="code-block__collapse-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg></button>
+    </div>
+  </div>
+  <div class="code-block-expandible code-block-expandible--open">
+    <div class="code-block-wrapper" style="min-height: 0px;">
+      <pre tabindex="0" class="chroma">
+        <code class="language-C" data-lang="C"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#080">#include</span> <span style="color:#080">&lt;sthread.h&gt;</span><span style="color:#080">
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span><span style="color:#080">#include</span> <span style="color:#080">&lt;unistd.h&gt;</span><span style="color:#080">
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span><span style="color:#080">#include</span> <span style="color:#080">&lt;sys/syscall.h&gt;</span><span style="color:#080">
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span><span style="color:#080">#include</span> <span style="color:#080">&lt;linux/futex.h&gt;</span><span style="color:#080">
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span><span style="color:#080">#include</span> <span style="color:#080">&lt;linux/sched.h&gt;</span><span style="color:#080">
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span><span style="color:#080"></span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span><span style="color:#080">#include</span> <span style="color:#080">&#34;../stack/stack.h&#34;</span><span style="color:#080">
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span><span style="color:#080"></span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span><span style="color:#0b0;font-weight:bold">int</span> <span style="color:#00a000">sthread_join</span>(<span style="color:#0b0;font-weight:bold">sthread_t</span> <span style="color:#a2f;font-weight:bold">thread</span>, <span style="color:#0b0;font-weight:bold">void</span><span style="color:#666">**</span> ret_val) {
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>	<span style="color:#00a000">syscall</span>(SYS_futex, <span style="color:#666">&amp;</span><span style="color:#a2f;font-weight:bold">thread</span><span style="color:#666">-&gt;</span>lock, FUTEX_WAIT, <span style="color:#666">0</span>, <span style="color:#a2f">NULL</span>, <span style="color:#a2f">NULL</span>, <span style="color:#666">0</span>);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>	<span style="color:#a2f;font-weight:bold">if</span>(ret_val) <span style="color:#666">*</span>ret_val <span style="color:#666">=</span> <span style="color:#a2f;font-weight:bold">thread</span><span style="color:#666">-&gt;</span>result;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>	<span style="color:#00a000">deallocate_stack</span>(<span style="color:#666">&amp;</span><span style="color:#a2f;font-weight:bold">thread</span><span style="color:#666">-&gt;</span>thread_attributes); <span style="color:#080;font-style:italic">//multiple joins on same thread will break things
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span><span style="color:#080;font-style:italic"></span>	<span style="color:#a2f;font-weight:bold">return</span> <span style="color:#666">0</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span>}</span></span></code>
+        <code class="language-C" data-lang="C"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 1</span><span><span style="color:#8a93a5;font-style:italic">#include</span> <span style="color:#8a93a5;font-style:italic">&lt;sthread.h&gt;</span><span style="color:#8a93a5;font-style:italic">
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 2</span><span><span style="color:#8a93a5;font-style:italic">#include</span> <span style="color:#8a93a5;font-style:italic">&lt;unistd.h&gt;</span><span style="color:#8a93a5;font-style:italic">
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 3</span><span><span style="color:#8a93a5;font-style:italic">#include</span> <span style="color:#8a93a5;font-style:italic">&lt;sys/syscall.h&gt;</span><span style="color:#8a93a5;font-style:italic">
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 4</span><span><span style="color:#8a93a5;font-style:italic">#include</span> <span style="color:#8a93a5;font-style:italic">&lt;linux/futex.h&gt;</span><span style="color:#8a93a5;font-style:italic">
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 5</span><span><span style="color:#8a93a5;font-style:italic">#include</span> <span style="color:#8a93a5;font-style:italic">&lt;linux/sched.h&gt;</span><span style="color:#8a93a5;font-style:italic">
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 6</span><span><span style="color:#8a93a5;font-style:italic"></span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 7</span><span><span style="color:#8a93a5;font-style:italic">#include</span> <span style="color:#8a93a5;font-style:italic">&#34;../stack/stack.h&#34;</span><span style="color:#8a93a5;font-style:italic">
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 8</span><span><span style="color:#8a93a5;font-style:italic"></span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f"> 9</span><span><span style="color:#e5c07b">int</span> <span style="color:#00b1f7">sthread_join</span><span style="color:#abb2bf">(</span><span style="color:#e5c07b">sthread_t</span> <span style="color:#76a9f9">thread</span><span style="color:#abb2bf">,</span> <span style="color:#e5c07b">void</span><span style="color:#54b1c7">**</span> <span style="color:#aa89ea">ret_val</span><span style="color:#abb2bf">)</span> <span style="color:#abb2bf">{</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">10</span><span>	<span style="color:#00b1f7">syscall</span><span style="color:#abb2bf">(</span><span style="color:#aa89ea">SYS_futex</span><span style="color:#abb2bf">,</span> <span style="color:#54b1c7">&amp;</span><span style="color:#76a9f9">thread</span><span style="color:#54b1c7">-&gt;</span><span style="color:#aa89ea">lock</span><span style="color:#abb2bf">,</span> <span style="color:#aa89ea">FUTEX_WAIT</span><span style="color:#abb2bf">,</span> <span style="color:#d19a66">0</span><span style="color:#abb2bf">,</span> <span style="color:#e5c07b">NULL</span><span style="color:#abb2bf">,</span> <span style="color:#e5c07b">NULL</span><span style="color:#abb2bf">,</span> <span style="color:#d19a66">0</span><span style="color:#abb2bf">);</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">11</span><span>	<span style="color:#76a9f9">if</span><span style="color:#abb2bf">(</span><span style="color:#aa89ea">ret_val</span><span style="color:#abb2bf">)</span> <span style="color:#54b1c7">*</span><span style="color:#aa89ea">ret_val</span> <span style="color:#54b1c7">=</span> <span style="color:#76a9f9">thread</span><span style="color:#54b1c7">-&gt;</span><span style="color:#aa89ea">result</span><span style="color:#abb2bf">;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">12</span><span>	<span style="color:#00b1f7">deallocate_stack</span><span style="color:#abb2bf">(</span><span style="color:#54b1c7">&amp;</span><span style="color:#76a9f9">thread</span><span style="color:#54b1c7">-&gt;</span><span style="color:#aa89ea">thread_attributes</span><span style="color:#abb2bf">);</span> <span style="color:#8a93a5;font-style:italic">//multiple joins on same thread will break things
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">13</span><span><span style="color:#8a93a5;font-style:italic"></span>	<span style="color:#76a9f9">return</span> <span style="color:#d19a66">0</span><span style="color:#abb2bf">;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">14</span><span><span style="color:#abb2bf">}</span></span></span></code>
+      </pre>
+    </div>
+  </div>
+</figure>
+<h2 id="deallocating-the-stack">Deallocating The Stack</h2>
+<p>Since, we are storing our <code>sthread</code> object at the end of our stack it is not possible for us to clean up the stack before the thread has joined. Thus during <code>sthread_join</code> we deallocate our stack (Note that this breaks multiple joins on the same thread).</p>
+<p>To deallocate the stack, we simply use the <code>munmap</code> function, that removes the page table entry from our process address space and also updates our <code>vm_area_struct</code> entries.</p>
+<figure class="highlight">
+  <div class="code-block-header">
+    <div class="title">
+      <tt></tt>
+    </div>
+    <div class="code-block-header__button-tray">
+      <button class="code-block__copy" data-code='int deallocate_stack(const sthread_attr* thread_attr) {
+	return munmap(thread_attr-&gt;stack_ptr, thread_attr-&gt;stack_size);
+}'>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M64 464l224 0c8.8 0 16-7.2 16-16l0-64 48 0 0 64c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 224c0-35.3 28.7-64 64-64l64 0 0 48-64 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16zM224 304l224 0c8.8 0 16-7.2 16-16l0-224c0-8.8-7.2-16-16-16L224 48c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16zm-64-16l0-224c0-35.3 28.7-64 64-64L448 0c35.3 0 64 28.7 64 64l0 224c0 35.3-28.7 64-64 64l-224 0c-35.3 0-64-28.7-64-64z"/></svg>
+        <span>Copy</span>
+      </button>
+      <button class="code-block__collapse">
+        <svg class="code-block__collapse-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg></button>
+    </div>
+  </div>
+  <div class="code-block-expandible code-block-expandible--open">
+    <div class="code-block-wrapper" style="min-height: 0px;">
+      <pre tabindex="0" class="chroma">
+        <code class="language-c" data-lang="c"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span><span style="color:#0b0;font-weight:bold">int</span> <span style="color:#00a000">deallocate_stack</span>(<span style="color:#a2f;font-weight:bold">const</span> sthread_attr<span style="color:#666">*</span> thread_attr) {
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span>	<span style="color:#a2f;font-weight:bold">return</span> <span style="color:#00a000">munmap</span>(thread_attr<span style="color:#666">-&gt;</span>stack_ptr, thread_attr<span style="color:#666">-&gt;</span>stack_size);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span>}</span></span></code>
+        <code class="language-c" data-lang="c"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">1</span><span><span style="color:#e5c07b">int</span> <span style="color:#00b1f7">deallocate_stack</span><span style="color:#abb2bf">(</span><span style="color:#76a9f9">const</span> <span style="color:#aa89ea">sthread_attr</span><span style="color:#54b1c7">*</span> <span style="color:#aa89ea">thread_attr</span><span style="color:#abb2bf">)</span> <span style="color:#abb2bf">{</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">2</span><span>	<span style="color:#76a9f9">return</span> <span style="color:#00b1f7">munmap</span><span style="color:#abb2bf">(</span><span style="color:#aa89ea">thread_attr</span><span style="color:#54b1c7">-&gt;</span><span style="color:#aa89ea">stack_ptr</span><span style="color:#abb2bf">,</span> <span style="color:#aa89ea">thread_attr</span><span style="color:#54b1c7">-&gt;</span><span style="color:#aa89ea">stack_size</span><span style="color:#abb2bf">);</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#58626f">3</span><span><span style="color:#abb2bf">}</span></span></span></code>
+      </pre>
+    </div>
+  </div>
+</figure>
+<h2 id="conclusion">Conclusion</h2>
+<p>Ta da! We are done with creating our basic preemptive thread from scratch. The code for <code>sthread</code> can be found <a href="https://github.com/hsiam261/sthread">here</a>. The repository also has some example cases codes using <code>sthread</code> that you can try out and play with. There are more to threads than just creating and joining though. Specifically they are not very useful without any synchronization primitives. On our later blogs, we will add semaphore support to <code>sthread</code> using futexes.</p>
+
+    </div>
+    
+    <div class="post__tags">
+    <hr>
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M345 39.1L472.8 168.4c52.4 53 52.4 138.2 0 191.2L360.8 472.9c-9.3 9.4-24.5 9.5-33.9 .2s-9.5-24.5-.2-33.9L438.6 325.9c33.9-34.3 33.9-89.4 0-123.7L310.9 72.9c-9.3-9.4-9.2-24.6 .2-33.9s24.6-9.2 33.9 .2zM0 229.5L0 80C0 53.5 21.5 32 48 32l149.5 0c17 0 33.3 6.7 45.3 18.7l168 168c25 25 25 65.5 0 90.5L277.3 442.7c-25 25-65.5 25-90.5 0l-168-168C6.7 262.7 0 246.5 0 229.5zM144 144a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"/></svg>
+    
+    
+    <span>
+        <a href="/tags/building-things-from-scratch">building-things-from-scratch</a>,</span>
+    <span>
+        <a href="/tags/systems-programming">systems-programming</a>,</span>
+    <span>
+        <a href="/tags/linux">linux</a>,</span>
+    <span>
+        <a href="/tags/threads">threads</a></span>
+    
+    
+</div>
+
+    
+</div>
+
+
+      </main>
+    </div>
+    
+    <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css">
+<script defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script>
+
+<script defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body);"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false }
+      ]
+    });
+  });
+</script>
+
+    
+    <footer class="footer">
+      <p>Powered by <a href="https://gohugo.io/"><tt>hugo</tt></a> and <a href="https://github.com/hsiam261/ikaria"><tt>ikaria</tt></a>. </p>
+
+    </footer>
+  </div>
+</body>
+</html>
